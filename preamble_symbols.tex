@@ -1,0 +1,453 @@
+%!TEX root = main.tex
+
+% LC: can be inserted
+% \newcommand{\qed}{{\hfill $\square$}}
+
+% Format definition
+% \newrefformat{prob}{Problem\,\ref{#1}}
+% \newrefformat{def}{Definition\,\ref{#1}}
+% \newrefformat{sec}{Section\,\ref{#1}}
+% \newrefformat{sub}{Section\,\ref{#1}}
+% \newrefformat{prop}{Proposition\,\ref{#1}}
+% \newrefformat{app}{Appendix\,\ref{#1}}
+% \newrefformat{alg}{Algorithm\,\ref{#1}}
+% \newrefformat{cor}{Corollary\,\ref{#1}}
+% \newrefformat{thm}{Theorem\,\ref{#1}}
+% \newrefformat{lem}{Lemma\,\ref{#1}}
+% \newrefformat{fig}{Fig.\,\ref{#1}}
+% \newrefformat{tab}{Table\,\ref{#1}}
+
+% Problem environment 
+% \newtheorem{theorem}{Theorem}
+% \newtheorem{problem}{Problem}
+% \newtheorem{trule}[theorem]{Rule}
+% \newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{algorithm}{Algorithm}
+%\newtheorem{procedure}{\textbf{Procedure}}
+% \newtheorem{conjecture}[theorem]{Conjecture}
+% \newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{assumption}[theorem]{Assumption}
+% \newtheorem{definition}[theorem]{Definition}
+% \newtheorem{proposition}[theorem]{Proposition}
+% \newtheorem{remark}[theorem]{Remark}
+% \newtheorem{example}[theorem]{Example}
+
+% Shortcuts
+\newcommand{\cf}{\emph{cf.}\xspace}
+\newcommand{\Figure}{Fig.}
+\newcommand{\bdmath}{\begin{dmath}}
+\newcommand{\edmath}{\end{dmath}}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bdm}{\begin{displaymath}}
+\newcommand{\edm}{\end{displaymath}}
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\beal}{\beq \begin{array}{ll}}
+\newcommand{\eeal}{\end{array} \eeq}
+\newcommand{\beas}{\begin{eqnarray*}}
+\newcommand{\eeas}{\end{eqnarray*}}
+\newcommand{\ba}{\begin{array}}
+\newcommand{\ea}{\end{array}}
+\newcommand{\bit}{\begin{itemize}}
+\newcommand{\eit}{\end{itemize}}
+\newcommand{\ben}{\begin{enumerate}}
+\newcommand{\een}{\end{enumerate}}
+\newcommand{\expl}[1]{&&\qquad\text{\color{gray}(#1)}\nonumber}
+
+% \newcommand{\insertproof}[1]{%
+%     % lem:name -> proof_lem_name.tex
+%     \StrSubstitute{#1}{:}{_}[\name] % replace : with _
+%     \begin{IEEEproof} %\color[rgb]{0.8,0.8,0.8}
+%     \input{proof_\name.tex}
+%     \end{IEEEproof}
+% }
+
+% Calligraphic fonts
+\newcommand{\calA}{{\cal A}}
+\newcommand{\calB}{{\cal B}}
+\newcommand{\calC}{{\cal C}}
+\newcommand{\calD}{{\cal D}}
+\newcommand{\calE}{{\cal E}}
+\newcommand{\calF}{{\cal F}}
+\newcommand{\calG}{{\cal G}}
+\newcommand{\calH}{{\cal H}}
+\newcommand{\calI}{{\cal I}}
+\newcommand{\calJ}{{\cal J}}
+\newcommand{\calK}{{\cal K}}
+\newcommand{\calL}{{\cal L}}
+\newcommand{\calM}{{\cal M}}
+\newcommand{\calN}{{\cal N}}
+\newcommand{\calO}{{\cal O}}
+\newcommand{\calP}{{\cal P}}
+\newcommand{\calQ}{{\cal Q}}
+\newcommand{\calR}{{\cal R}}
+\newcommand{\calS}{{\cal S}}
+\newcommand{\calT}{{\cal T}}
+\newcommand{\calU}{{\cal U}}
+\newcommand{\calV}{{\cal V}}
+\newcommand{\calW}{{\cal W}}
+\newcommand{\calX}{{\cal X}}
+\newcommand{\calY}{{\cal Y}}
+\newcommand{\calZ}{{\cal Z}}
+
+% SETS:
+\newcommand{\setA}{\textsf{A}}
+\newcommand{\setB}{\textsf{B}}
+\newcommand{\setC}{\textsf{C}}
+\newcommand{\setD}{\textsf{D}}
+\newcommand{\setE}{\textsf{E}}
+\newcommand{\setF}{\textsf{F}}
+\newcommand{\setG}{\textsf{G}}
+\newcommand{\setH}{\textsf{H}}
+\newcommand{\setI}{\textsf{I}}
+\newcommand{\setJ}{\textsf{J}}
+\newcommand{\setK}{\textsf{K}}
+\newcommand{\setL}{\textsf{L}}
+\newcommand{\setM}{\textsf{M}}
+\newcommand{\setN}{\textsf{N}}
+\newcommand{\setO}{\textsf{O}}
+\newcommand{\setP}{\textsf{P}}
+\newcommand{\setQ}{\textsf{Q}}
+\newcommand{\setR}{\textsf{R}}
+\newcommand{\setS}{\textsf{S}}
+\newcommand{\setT}{\textsf{T}}
+\newcommand{\setU}{\textsf{U}}
+\newcommand{\setV}{\textsf{V}}
+\newcommand{\setX}{\textsf{X}}
+\newcommand{\setY}{\textsf{Y}}
+\newcommand{\setZ}{\textsf{Z}}
+
+%General
+\newcommand{\smallheading}[1]{\textit{#1}: }
+\newcommand{\algostep}[1]{{\small\texttt{#1:}}\xspace}
+\newcommand{\etal}{\emph{et~al.}\xspace}
+\newcommand{\setal}{~\emph{et~al.}\xspace}
+\newcommand{\eg}{\emph{e.g.,}\xspace}
+\newcommand{\ie}{\emph{i.e.,}\xspace}
+\newcommand{\myParagraph}[1]{{\bf #1.}\xspace}
+% \newcommand{\email}[1]{{\smaller \textsf{#1}}}
+
+%Typography
+\newcommand{\M}[1]{{\bm #1}} % Face for matrices
+\renewcommand{\boldsymbol}[1]{{\bm #1}}
+\newcommand{\algoname}[1]{\textsc{#1}} % Name of algorithms
+
+%Editing
+\newcommand{\towrite}{{\color{red} To write}\xspace}
+\newcommand{\xxx}{{\color{red} XXX}\xspace}
+\newcommand{\AC}[1]{{\color{red} \textbf{AC}: #1}}
+\newcommand{\LC}[1]{{\color{red} \textbf{LC}: #1}}
+\newcommand{\FM}[1]{{\color{red} \textbf{FM}: #1}}
+\newcommand{\RT}[1]{{\color{blue} \textbf{RT}: #1}}
+\newcommand{\VT}[1]{{\color{blue} \textbf{VT}: #1}}
+\newcommand{\hide}[1]{}
+\newcommand{\wrt}{w.r.t.\xspace}
+\newcommand{\highlight}[1]{{\color{red} #1}}
+\newcommand{\tocheck}[1]{{\color{brown} #1}}
+\newcommand{\grayout}[1]{{\color{gray} #1}}
+\newcommand{\grayText}[1]{{\color{gray} \text{#1} }}
+\newcommand{\grayMath}[1]{{\color{gray} #1 }}
+\newcommand{\hiddenText}{{\color{gray} hidden text.}}
+\newcommand{\hideWithText}[1]{\hiddenText}
+
+
+\newcommand{\NA}{{\sf n/a}}
+\newcommand{\versus}{\scenario{VS}\xspace}
+
+%Basic math symbols
+\newcommand{\kron}{\otimes}
+\newcommand{\dist}{\mathbf{dist}}
+\newcommand{\iter}{\! \rm{iter.} \;}
+\newcommand{\leqt}{\!\!\! < \!\!\!}
+\newcommand{\geqt}{\!\!\! > \!\!\!}
+\newcommand{\mysetminus}{-} % One set minus another
+\newcommand{\powerset}{\mathcal{P}}
+\newcommand{\Int}[1]{ { {\mathbb Z}^{#1} } }
+\newcommand{\Natural}[1]{ { {\mathbb N}^{#1} } }
+\newcommand{\Complex}[1]{ { {\mathbb C}^{#1} } }
+\newcommand{\one}{ {\mathbf{1}} }
+\newcommand{\subject}{\text{ subject to }}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+%% Norms
+\newcommand{\normsq}[2]{\left\|#1\right\|^2_{#2}}
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\normsqs}[2]{\|#1\|^2_{#2}}
+\newcommand{\infnorm}[1]{\|#1\|_{\infty}}
+\newcommand{\zeronorm}[1]{\|#1\|_{0}}
+\newcommand{\onenorm}[1]{\|#1\|_{1}}
+\newcommand{\lzero}{\ell_{0}}
+\newcommand{\lone}{\ell_{1}}
+\newcommand{\linf}{\ell_{\infty}}
+
+\newcommand{\E}{{\mathbb{E}}}
+\newcommand{\EV}{\mathbb{E}}
+\newcommand{\erf}{{\mathbf{erf}}}
+\newcommand{\prob}[1]{{\mathbb P}\left(#1\right)}
+% \newcommand{\tran}{^{\top}}
+\newcommand{\tran}{^{\mathsf{T}}}
+\newcommand{\traninv}{^{-\mathsf{T}}}
+\newcommand{\diag}[1]{\mathrm{diag}\left(#1\right)}
+\newcommand{\trace}[1]{\mathrm{tr}\left(#1\right)}
+\newcommand{\conv}[1]{\mathrm{conv}\left(#1\right)}
+\newcommand{\polar}[1]{\mathrm{polar}\left(#1\right)}
+\newcommand{\rank}[1]{\mathrm{rank}\left(#1\right)}
+\newcommand{\e}{{\mathrm e}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\pinv}{^\dag}
+\newcommand{\until}[1]{\{1,\dots, #1\}}
+\newcommand{\ones}{{\mathbf 1}}
+\newcommand{\zero}{{\mathbf 0}}
+\newcommand{\eye}{{\mathbf I}}
+\newcommand{\vect}[1]{\left[\begin{array}{c}  #1  \end{array}\right]}
+\newcommand{\matTwo}[1]{\left[\begin{array}{cc}  #1  \end{array}\right]}
+\newcommand{\matThree}[1]{\left[\begin{array}{ccc}  #1  \end{array}\right]}
+\newcommand{\dss}{\displaystyle}
+\newcommand{\Real}[1]{ { {\mathbb R}^{#1} } }
+\newcommand{\reals}{\Real{}}
+\newcommand{\opt}{^{\star}}
+\newcommand{\only}{^{\alpha}}
+\newcommand{\copt}{^{\text{c}\star}}
+\newcommand{\atk}{^{(k)}}
+\newcommand{\att}{^{(t)}}
+\newcommand{\at}[1]{^{(#1)}}
+\newcommand{\attau}{^{(\tau)}}
+\newcommand{\atc}[1]{^{(#1)}}
+\newcommand{\atK}{^{(K)}}
+\newcommand{\atj}{^{(j)}}
+\newcommand{\projector}{{\tt projector}}
+\newcommand{\setdef}[2]{ \{#1 \; {:} \; #2 \} }
+\newcommand{\smalleye}{\left(\begin{smallmatrix}1&0\\0&1\end{smallmatrix}\right)}
+
+%Spaces
+\newcommand{\SEtwo}{\ensuremath{\mathrm{SE}(2)}\xspace}
+\newcommand{\SE}[1]{\ensuremath{\mathrm{SE}(#1)}\xspace}
+\newcommand{\SEthree}{\ensuremath{\mathrm{SE}(3)}\xspace}
+\newcommand{\SOtwo}{\ensuremath{\mathrm{SO}(2)}\xspace}
+\newcommand{\SOthree}{\ensuremath{\mathrm{SO}(3)}\xspace}
+\newcommand{\Othree}{\ensuremath{\mathrm{O}(3)}\xspace}
+\newcommand{\SOn}{\ensuremath{\mathrm{SO}(n)}\xspace}
+\newcommand{\SO}[1]{\ensuremath{\mathrm{SO}(#1)}\xspace}
+\newcommand{\On}{\ensuremath{\mathrm{O}(n)}\xspace}
+\newcommand{\sotwo}{\ensuremath{\mathrm{so}(2)}\xspace}
+\newcommand{\sothree}{\ensuremath{\mathrm{so}(3)}\xspace}
+\newcommand{\intexpmap}[1]{\mathrm{Exp}\left(#1\right)}
+\newcommand{\intlogmap}[1]{\mathrm{Log}\left(#1\right)}
+\newcommand{\logmapz}[1]{\mathrm{Log}_0(#1)}
+\newcommand{\loglikelihood}{\mathrm{log}\calL}
+\newcommand{\intprinlogmap}{\mathrm{Log}_0}
+\newcommand{\expmap}[1]{\intexpmap{#1}}
+\newcommand{\expmaps}[1]{\langle #1 \rangle_{2\pi}}
+\newcommand{\biggexpmap}[1]{\left\langle #1 \right\rangle_{2\pi}}
+\newcommand{\logmap}[1]{\intlogmap{#1}}
+\newcommand{\round}[1]{\mathrm{round}\left( #1 \right)}
+
+% Matrices 
+\newcommand{\MA}{\M{A}}
+\newcommand{\MB}{\M{B}}
+\newcommand{\MC}{\M{C}}
+\newcommand{\MD}{\M{D}}
+\newcommand{\ME}{\M{E}}
+\newcommand{\MJ}{\M{J}}
+\newcommand{\MK}{\M{K}}
+\newcommand{\MG}{\M{G}}
+\newcommand{\MM}{\M{M}}
+\newcommand{\MN}{\M{N}}
+\newcommand{\MP}{\M{P}}
+\newcommand{\MQ}{\M{Q}}
+\newcommand{\MU}{\M{U}}
+\newcommand{\MR}{\M{R}}
+\newcommand{\MS}{\M{S}}
+\newcommand{\MI}{\M{I}}
+\newcommand{\MV}{\M{V}}
+\newcommand{\MF}{\M{F}}
+\newcommand{\MH}{\M{H}}
+\newcommand{\ML}{\M{L}}
+\newcommand{\MO}{\M{O}}
+\newcommand{\MT}{\M{T}}
+\newcommand{\MX}{\M{X}}
+\newcommand{\MY}{\M{Y}}
+\newcommand{\MW}{\M{W}}
+\newcommand{\MZ}{\M{Z}}
+\newcommand{\MSigma}{\M{\Sigma}} 
+\newcommand{\MOmega}{\M{\Omega}}
+\newcommand{\MPhi}{\M{\Phi}}
+\newcommand{\MPsi}{\M{\Psi}}
+\newcommand{\MDelta}{\M{\Delta}}
+\newcommand{\MLambda}{\M{\Lambda}}
+
+% vectors
+\newcommand{\va}{\boldsymbol{a}} 
+\newcommand{\vh}{\boldsymbol{h}} 
+\newcommand{\vb}{\boldsymbol{b}}
+\newcommand{\vc}{\boldsymbol{c}}
+\newcommand{\vd}{\boldsymbol{d}}
+\newcommand{\ve}{\boldsymbol{e}}
+\newcommand{\vf}{\boldsymbol{f}}
+\newcommand{\vg}{\boldsymbol{g}}
+\newcommand{\vk}{\boldsymbol{k}}
+\newcommand{\vl}{\boldsymbol{l}}
+\newcommand{\vn}{\boldsymbol{n}}
+\newcommand{\vo}{\boldsymbol{o}}
+\newcommand{\vp}{\boldsymbol{p}}
+\newcommand{\vq}{\boldsymbol{q}}
+\newcommand{\vr}{\boldsymbol{r}}
+\newcommand{\vs}{\boldsymbol{s}}
+\newcommand{\vu}{\boldsymbol{u}}
+\newcommand{\vv}{\boldsymbol{v}}
+\newcommand{\vt}{\boldsymbol{t}}
+\newcommand{\vxx}{\boldsymbol{x}} 
+\newcommand{\vy}{\boldsymbol{y}}
+\newcommand{\vw}{\boldsymbol{w}}
+\newcommand{\vzz}{\boldsymbol{z}} 
+\newcommand{\vdelta}{\boldsymbol{\delta}}
+\newcommand{\vgamma}{\boldsymbol{\gamma}}  
+\newcommand{\vlambda}{\boldsymbol{\lambda}}
+\newcommand{\vtheta}{\boldsymbol{\theta}}
+\newcommand{\valpha}{\boldsymbol{\alpha}}
+\newcommand{\vbeta}{\boldsymbol{\beta}}
+\newcommand{\vnu}{\boldsymbol{\nu}}
+\newcommand{\vmu}{\boldsymbol{\mu}}
+\newcommand{\vepsilon}{\boldsymbol{\epsilon}}
+\newcommand{\vtau}{\boldsymbol{\tau}}
+
+%Intrinsic geometry
+\newcommand{\Rtheta}{\boldsymbol{R}}
+\newcommand{\symf}{f} % Symmetry function
+
+%Angles
+\newcommand{\angledomain}{(-\pi,+\pi]}
+
+% Tree, graphs, and cycle basis
+\newcommand{\MCB}{\mathsf{MCB}}
+\newcommand{\FCM}{\mathsf{FCM}}
+\newcommand{\FCB}{\mathsf{FCB}}
+\newcommand{\cyclemap}[1]{\calC^{\calG}\left(#1\right)}
+\newcommand{\incidencemap}[1]{\calA^{\calG}\left(#1\right)}
+\newcommand{\cyclemapk}{\calC^{\calG}_{k}}
+\newcommand{\incidencemapij}{\calA^{\calG}_{ij}}
+\renewcommand{\ij}{_{ij}}
+\newcommand{\foralledges}{\forall(i,j) \in \calE}
+\newcommand{\sumalledges}{
+     \displaystyle
+     \sum_{(i,j) \in \calE}}
+\newcommand{\sumalledgesm}{
+     \displaystyle
+     \sum_{i=1}^{m}}
+\newcommand{\T}{\mathsf{T}}
+\newcommand{\To}{\T_{\rm o}}
+\newcommand{\Tm}{\T_{\rm m}}
+\newcommand{\MCBa}{\MCB_{\mathsf{a}}}
+\newcommand{\FCBo}{\FCB_{\mathsf{o}}}
+\newcommand{\FCBm}{\FCB_{\mathsf{m}}}
+
+% Algorithms
+\newcommand{\algoonlyname}{MOLE2D}
+\newcommand{\algoml}{{\smaller\sf \algoonlyname}\xspace}
+\newcommand{\algocyclebasis}{\algoname{compute-cycle-basis}}
+\newcommand{\scenario}[1]{{\smaller \sf#1}\xspace}
+\newcommand{\toro}{{\smaller\sf Toro}\xspace}
+\newcommand{\gtwoo}{{\smaller\sf g2o}\xspace}
+\newcommand{\gtwooST}{{\smaller\sf g2oST}\xspace}
+\newcommand{\gtwood}{{\smaller\sf g2o{10}}\xspace}
+\newcommand{\gtsam}{{\smaller\sf gtsam}\xspace}
+\newcommand{\isam}{{\smaller\sf iSAM}\xspace}
+\newcommand{\lago}{{\smaller\sf LAGO}\xspace}
+\newcommand{\egtwoo}{{\smaller\sf \algoonlyname+g2o}\xspace}
+
+% Datasets
+%\newcommand{\grid}{\scenario{cube}}
+\newcommand{\rim}{\scenario{rim}}
+\newcommand{\cubicle}{\scenario{cubicle}}
+\newcommand{\sphere}{\scenario{sphere}}
+\newcommand{\sphereHard}{\scenario{sphere-a}}
+\newcommand{\garage}{\scenario{garage}}
+\newcommand{\torus}{\scenario{torus}}
+\newcommand{\oneloop}{\scenario{circle}}
+\newcommand{\intel}{\scenario{INTEL}}
+\newcommand{\bovisa}{\scenario{Bovisa}}
+\newcommand{\bov}{\scenario{B25b}}
+\newcommand{\fra}{\scenario{FR079}}
+\newcommand{\frb}{\scenario{FRH}}
+\newcommand{\csail}{\scenario{CSAIL}}
+\newcommand{\Ma}{\scenario{M3500}}
+\newcommand{\Mb}{\scenario{M10000}}
+\newcommand{\ATE}{\scenario{ATE}}
+\newcommand{\CVX}{\scenario{CVX}}
+\newcommand{\NEOS}{\scenario{NEOS}}
+\newcommand{\sdptThree}{\scenario{sdpt3}}
+\newcommand{\MOSEK}{\scenario{MOSEK}}
+\newcommand{\NESTA}{\scenario{NESTA}}
+\newcommand{\vertigo}{\scenario{Vertigo}}
+\newcommand{\SDPA}{\scenario{SDPA}}
+
+% \newcommand{\tablabel}[1]{%
+%     \hspace{-1mm}%
+%     \begin{sideways}{\small\scenario{#1}}\end{sideways}%
+%     \hspace{-4mm}%
+% }
+%
+% \newcommand{\tabfig}[2]{%
+%     \subfloat[\label{fig:#2} #1]{%
+%     \begin{minipage}{5.5cm}%
+%     \centering%
+%     \includegraphics[width=5.5cm,trim=4 0 4 15]{figures/#2}
+%     \end{minipage}%
+%     }%
+% }
+%
+% \newcommand{\subFigure}[3]{%
+%     \subfloat[\label{fig:#2} #1]{%
+%     \begin{minipage}{#3cm}%
+%     \centering%
+%     \includegraphics[width=#3cm,trim=4 0 4 15]{figures/#2}
+%     \end{minipage}%
+%     }%
+% }
+\newcommand{\cvx}{{\sf cvx}\xspace}
+
+% COLORS
+\newcommand{\blue}[1]{{\color{blue}#1}}
+\newcommand{\green}[1]{{\color{green}#1}}
+\newcommand{\red}[1]{{\color{red}#1}}
+
+% TO MANAGE REFERENCES
+%============================================================================
+\newcommand{\linkToPdf}[1]{\href{#1}{\blue{(pdf)}}}
+\newcommand{\linkToPpt}[1]{\href{#1}{\blue{(ppt)}}}
+\newcommand{\linkToCode}[1]{\href{#1}{\blue{(code)}}}
+\newcommand{\linkToWeb}[1]{\href{#1}{\blue{(web)}}}
+\newcommand{\linkToVideo}[1]{\href{#1}{\blue{(video)}}}
+\newcommand{\linkToMedia}[1]{\href{#1}{\blue{(media)}}}
+\newcommand{\award}[1]{\xspace} % {{\red{#1}}} % omit awards
+
+
+% PAPER-SPECIFIC COMMANDS
+%============================================================================
+
+% Linear approximation
+\newcommand{\vpose}{\boldsymbol{x}}
+\newcommand{\vz}{\boldsymbol{z}}
+\newcommand{\vDelta}{\boldsymbol{\Delta}}
+\newcommand{\vposesub}{\hat{\vpose}}
+\newcommand{\vpossub}{\hat{\vpos}}
+\newcommand{\vthetasub}{\hat{\vtheta}}
+\newcommand{\Pthetasub}{\MP_\vtheta}
+\newcommand{\thetasub}{\hat{\theta}}
+\newcommand{\vposecorr}{\tilde{\vpose}}
+\newcommand{\vposcorr}{\tilde{\vpos}}
+\newcommand{\vthetacorr}{\tilde{\vtheta}}
+\newcommand{\vposestar}{{\vpose}^{\star}}
+\newcommand{\vposstar}{{\vpos}^{\star}}
+\newcommand{\vthetastar}{{\vtheta}^{\star}}
+\newcommand{\vcthetastar}{{\vctheta}^{\star}}
+\newcommand{\pose}{\boldsymbol{x}}
+\newcommand{\pos}{\boldsymbol{p}}
+\newcommand{\mease}{z} % element
+\newcommand{\meas}{\boldsymbol{z}} % vector
+\newcommand{\meashat}{\hat{\meas}}
+
+
+

@@ -3,17 +3,7 @@
 % 中英文摘要和关键字
 
 \begin{abstract}
-  我们研究了具备加性不确定性和凸控制的仿射多项式系统的鲁棒控制障碍函数 (CBF) 的验证和综合问题。
-  我们首先将 CBF 的验证和综合问题表述为多级多项式优化问题 (POP)。
-  其中，验证问题进行了三个级别的优化：
-  系统不确定性、控制输入和系统状态，而综合问题还优化了 CBF 的候选参数。
-  我们的研究表明，通过对系统不确定性和控制输入这两个优化级别使用 KKT 条件，验证问题可以简化为单级 POP，综合问题可以简化为最小-最大 POP。
-  进一步地，我们可以使用多级半定松弛求解上述两个问题。
-  对于验证问题转化而来的单级 POP，我们应用 Lasserre's Hierarchy 这一矩松弛方法；
-  对于综合问题转化来的最小-最大 POP，我们使用平方和 (SOS) 优化方法来找到获得 POP 的未知值函数的不断紧逼的多项式下界，
-  并再次调用 Lasserre's Hierarchy以最大化下界。
-  两种松弛方法都保证渐近全局收敛到最优。
-  实验方面，我们对受控 Van der Pol 振荡器进行了深入研究，并对系统具备和不具备加性不确定性这两种情况分别进行了讨论。
+  本文研究了具备加性不确定性和凸控制输入边界的仿射多项式系统中，鲁棒控制障碍函数的验证和综合问题。在上述系统条件下，控制障碍函数的验证和综合问题可表示为多级多项式优化问题。其中，验证问题包含三个级别的优化：系统不确定性、控制输入和系统状态；而综合问题对控制障碍函数的候选参数也进行了优化。研究表明，通过对系统不确定性和控制输入这两个优化级别使用KKT条件，验证问题可以简化为单级多项式优化问题，综合问题可以简化为最小-最大多项式优化问题。进一步地，我们可以使用多级半正定松弛求解上述两个问题：对于验证问题转化而来的单级多项式优化问题，我们应用Lasserre's Hierarchy这一矩松弛方法；对于综合问题转化来的最小-最大多项式优化问题，我们使用平方和优化方法获得优化问题未知值函数的不断紧逼的多项式下界，并再次调用Lasserre's Hierarchy以最大化下界。两种松弛方法都拥有渐进收敛到全局最优的理论保证。实验方面，我们对受控Van der Pol振荡器进行了深入研究，并对系统具备和不具备加性不确定性这两种情况分别进行了讨论。
 
   % 关键词用“英文逗号”分隔，输出时会自动处理为正确的分隔符
   \thusetup{
@@ -22,17 +12,8 @@
 \end{abstract}
 
 \begin{abstract*}
-  We study verification and synthesis of a 
-  robust control barrier function (CBF) for control-affine polynomial systems with additive uncertainty and convex control. 
-  We first formulate CBF verification and synthesis as multilevel polynomial optimization problems (POP), where verification  optimizes --in three levels-- 
-  the uncertainty, control, and state, while synthesis additionally optimizes the parameter of a chosen parametric CBF candidate. 
-  We then show that, by invoking the KKT conditions of inner optimizations over uncertainty and control, the verification problem can be simplified as a single-level POP and the synthesis problem reduces to a min-max POP. 
-  This reduction leads to multilevel semidefinite relaxations. 
-  For the verification POP, we apply Lasserre's hierarchy of moment relaxations; 
-  and for the synthesis min-max POP, we use sum-of-squares (SOS) programming to find increasingly tight polynomial lower bounds to the unknown value function of the verification POP, 
-  and call Lasserre's hierarchy again to maximize the lower bounds. 
-  Both relaxations guarantee asymptotic global convergence to optimality. 
-  We provide an in-depth study of our framework on the controlled Van der Pol Oscillator, both with and without additive uncertainty.
+  We study verification and synthesis of a robust control barrier function (CBF) for control-affine polynomial systems with additive uncertainty and convex control. We first formulate CBF verification and synthesis as multilevel polynomial optimization problems (POP), where verification  optimizes --in three levels-- the uncertainty, control, and state, while synthesis additionally optimizes the parameter of a chosen parametric CBF candidate. We then show that, by invoking the KKT conditions of inner optimizations over uncertainty and control, the verification problem can be simplified as a single-level POP and the synthesis problem reduces to a min-max POP. This reduction leads to multilevel semidefinite relaxations. 
+  For the verification POP, we apply Lasserre's hierarchy of moment relaxations; and for the synthesis min-max POP, we use sum-of-squares (SOS) programming to find increasingly tight polynomial lower bounds to the unknown value function of the verification POP, and call Lasserre's hierarchy again to maximize the lower bounds. Both relaxations guarantee asymptotic global convergence to optimality. We provide an in-depth study of our framework on the controlled Van der Pol Oscillator, both with and without additive uncertainty.
 
   % Use comma as separator when inputting
   \thusetup{

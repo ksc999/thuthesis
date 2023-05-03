@@ -1,0 +1,135 @@
+%!TEX root = main.tex
+
+% LC: debug
+%==========================================================================
+%\usepackage{refcheck}
+%\usepackage[notref]{showkeys}
+%==========================================================================
+
+% LC: to be used for TRO
+%==========================================================================
+% \usepackage{mathptmx} % assumes new font selection scheme installed
+%\usepackage{times} % assumes new font selection scheme installed
+%==========================================================================
+\usepackage{comment}
+\usepackage{siunitx}
+\usepackage{relsize}
+\usepackage{ifthen}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\usepackage[caption=false]{subfig}
+
+% \begin{comment}
+% % Fancy formatting 
+% \usepackage[tracking=false,kerning=true,spacing=true]{microtype}
+% \usepackage[caption=false]{subfig}
+
+% \usepackage[style=numeric-comp,sorting=none,firstinits=true, maxnames=3,bibstyle=numeric,abbreviate=false,defernums=true,eprint=false,backend=bibtex]{biblatex}
+% \renewcommand{\bibfont}{\footnotesize}
+% % \DeclareFieldFormat[article]{pages}{#1}%
+% % \DeclareFieldFormat[inproceedings]{pages}{#1}%
+
+% \AtEveryBibitem{%
+%   \ifentrytype{article}{%
+%     \clearfield{pages}%
+%   }{%
+%   }%
+%   \ifentrytype{inproceedings}{%
+%     \clearfield{pages}%
+%   }{%
+%   }%
+% }
+% \end{comment}
+
+% \bibliography{commons/bib/strings_long}
+% \bibliography{commons/bib/all_only_one_w_pages}
+% \bibliography{../../references/references}
+
+% \usepackage[noadjust]{cite}
+\usepackage[vlined,ruled,linesnumbered]{algorithm2e}
+\usepackage{graphics} % for pdf, bitmapped graphics files
+\usepackage{rotating}
+\usepackage{color}
+\usepackage{enumerate}
+\usepackage[T1]{fontenc}
+\usepackage{psfrag}
+\usepackage{epsfig} % for postscript graphics files
+%\usepackage{subfigure}
+% \usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{graphicx,url}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{latexsym}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+%\usepackage{amsthm}
+\usepackage{xstring}
+\usepackage[noend]{algorithmic}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{prettyref}
+\usepackage{flexisym}
+\usepackage{bigdelim}
+\usepackage{breqn} % load this last
+\usepackage{listings}
+\let\labelindent\relax
+\usepackage{enumitem}
+\usepackage{xspace}
+\usepackage{bm}
+\graphicspath{{./figures/}}
+\usepackage{tikz}
+\usetikzlibrary{matrix,calc}
+
+
+%\usepackage{ifpdf}
+% Heiko Oberdiek's ifpdf.sty is very useful if you need conditional
+% compilation based on whether the output is pdf or dvi.
+% usage:
+% \ifpdf
+%   % pdf code
+% \else
+%    dvi code
+% \fi
+% The latest version of ifpdf.sty can be obtained from:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/oberdiek/
+% Also, note that IEEEtran.cls V1.7 and later provides a builtin
+% \ifCLASSINFOpdf conditional that works the same way.
+% When switching from latex to pdflatex and vice-versa, the compiler may
+% have to be run twice to clear warning/error messages.
+
+% *** GRAPHICS RELATED PACKAGES ***
+%
+%\ifCLASSINFOpdf
+  % \usepackage[pdftex]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../pdf/}{../jpeg/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
+%\else
+  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
+  % will default to the driver specified in the system graphics.cfg if no
+  % driver is specified.
+  % \usepackage[dvips]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../eps/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.eps}
+%\fi
+
+
+\usepackage{mdwlist}
+\let\stditemize\itemize
+\let\endstditemize\enditemize
+\let\itemize\undefined
+\makecompactlist{itemize}{stditemize}
+
+%\let\stdenumerate\enumerate
+%\let\endstdenumerate\endenumerate
+%\let\enumerate\undefined
+%\makecompactlist{enumerate}{stdenumerate}
+ 
