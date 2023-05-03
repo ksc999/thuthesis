@@ -3,37 +3,39 @@
 % 中英文摘要和关键字
 
 \begin{abstract}
-  论文的摘要是对论文研究内容和成果的高度概括。
-  摘要应对论文所研究的问题及其研究目的进行描述，对研究方法和过程进行简单介绍，对研究成果和所得结论进行概括。
-  摘要应具有独立性和自明性，其内容应包含与论文全文同等量的主要信息。
-  使读者即使不阅读全文，通过摘要就能了解论文的总体内容和主要成果。
-
-  论文摘要的书写应力求精确、简明。
-  切忌写成对论文书写内容进行提要的形式，尤其要避免“第 1 章……；第 2 章……；……”这种或类似的陈述方式。
-
-  关键词是为了文献标引工作、用以表示全文主要内容信息的单词或术语。
-  关键词不超过 5 个，每个关键词中间用分号分隔。
+  我们研究了具备加性不确定性和凸控制的仿射多项式系统的鲁棒控制障碍函数 (CBF) 的验证和综合问题。
+  我们首先将 CBF 的验证和综合问题表述为多级多项式优化问题 (POP)。
+  其中，验证问题进行了三个级别的优化：
+  系统不确定性、控制输入和系统状态，而综合问题还优化了 CBF 的候选参数。
+  我们的研究表明，通过对系统不确定性和控制输入这两个优化级别使用 KKT 条件，验证问题可以简化为单级 POP，综合问题可以简化为最小-最大 POP。
+  进一步地，我们可以使用多级半定松弛求解上述两个问题。
+  对于验证问题转化而来的单级 POP，我们应用 Lasserre's Hierarchy 这一矩松弛方法；
+  对于综合问题转化来的最小-最大 POP，我们使用平方和 (SOS) 优化方法来找到获得 POP 的未知值函数的不断紧逼的多项式下界，
+  并再次调用 Lasserre's Hierarchy以最大化下界。
+  两种松弛方法都保证渐近全局收敛到最优。
+  实验方面，我们对受控 Van der Pol 振荡器进行了深入研究，并对系统具备和不具备加性不确定性这两种情况分别进行了讨论。
 
   % 关键词用“英文逗号”分隔，输出时会自动处理为正确的分隔符
   \thusetup{
-    keywords = {关键词 1, 关键词 2, 关键词 3, 关键词 4, 关键词 5},
+    keywords = {控制障碍函数，多项式优化，半定松弛，最小-最大优化},
   }
 \end{abstract}
 
 \begin{abstract*}
-  An abstract of a dissertation is a summary and extraction of research work and contributions.
-  Included in an abstract should be description of research topic and research objective, brief introduction to methodology and research process, and summary of conclusion and contributions of the research.
-  An abstract should be characterized by independence and clarity and carry identical information with the dissertation.
-  It should be such that the general idea and major contributions of the dissertation are conveyed without reading the dissertation.
-
-  An abstract should be concise and to the point.
-  It is a misunderstanding to make an abstract an outline of the dissertation and words “the first chapter”, “the second chapter” and the like should be avoided in the abstract.
-
-  Keywords are terms used in a dissertation for indexing, reflecting core information of the dissertation.
-  An abstract may contain a maximum of 5 keywords, with semi-colons used in between to separate one another.
+  We study verification and synthesis of a 
+  robust control barrier function (CBF) for control-affine polynomial systems with additive uncertainty and convex control. 
+  We first formulate CBF verification and synthesis as multilevel polynomial optimization problems (POP), where verification  optimizes --in three levels-- 
+  the uncertainty, control, and state, while synthesis additionally optimizes the parameter of a chosen parametric CBF candidate. 
+  We then show that, by invoking the KKT conditions of inner optimizations over uncertainty and control, the verification problem can be simplified as a single-level POP and the synthesis problem reduces to a min-max POP. 
+  This reduction leads to multilevel semidefinite relaxations. 
+  For the verification POP, we apply Lasserre's hierarchy of moment relaxations; 
+  and for the synthesis min-max POP, we use sum-of-squares (SOS) programming to find increasingly tight polynomial lower bounds to the unknown value function of the verification POP, 
+  and call Lasserre's hierarchy again to maximize the lower bounds. 
+  Both relaxations guarantee asymptotic global convergence to optimality. 
+  We provide an in-depth study of our framework on the controlled Van der Pol Oscillator, both with and without additive uncertainty.
 
   % Use comma as separator when inputting
   \thusetup{
-    keywords* = {keyword 1, keyword 2, keyword 3, keyword 4, keyword 5},
+    keywords* = {control barrier function, polynomial optimization, semidefinite relaxation, min-max optimization},
   }
 \end{abstract*}
