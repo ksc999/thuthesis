@@ -1,0 +1,20 @@
+% !TeX root = ../thuthesis-example.tex
+
+\chapter{文献综述}
+\label{sec:relatedwork}
+
+控制障碍函数中存在着三个基本问题：部署问题、验证问题和综合问题。部署问题侧重于在给定一个有效的控制障碍函数时，设计出一个能够在线计算的安全控制器。而验证和综合问题则需通过离线计算，找到这样一个有效的控制障碍函数。
+
+\section{部署问题} 
+在没有模型不确定性的情况下，给定控制障碍函数的在线安全控制可以被表示为二次规划 ~\cite{ames2014cdc-cbforigin}高效求解。而当存在不确定性时，在不同的假设下，安全控制问题也可以被转化为某些凸优化问题，如二阶锥规划 ~\cite{long2022ral-robustsocp,dhiman2021tac-robustsocp} 或半无限规划~\cite{wei2022acc-uncertainsynthesis} 。以上算法通常可以高效地获得全局最优解。
+
+\section{验证与综合问题：平方和优化方法}
+平方和优化方法在控制障碍函数的验证与综合问题中显示出了越来越大的潜力，因为它在同时处理无限多的约束的同时，仍然保留着计算上的易处理性（理论上，平方和方法是一类凸优化问题，可以在多项式时间内求解，但在实际应用过程中，随着问题规模的增大也会变得难以处理）。早期的工作\cite{prajna2004hscc-bfsynthesis,prajna2006automatica-bfsynthesis} 考虑了无控制信号输入时障碍函数的合成。而当考虑控制信号输入时，经典方法将综合问题表述为双线性平方和优化问题。它们通常会假设已经存在一个合理的在线控制器~\cite{ames2019ecc-cbftheapp}，或是选择参数化一个输入控制器~\cite{wang2022arxiv-safetysynver}（这是合法控制障碍函数存在性的充分但不必要的条件）。近期的工作~\cite{clark22arxiv-cbf,dai2022arxiv-clfcbfsynveri,zhao22arxiv-cbfsos}删除了显式控制器存在性的假设。 例如，\cite{zhao22arxiv-cbfsos}考虑箱型的控制信号输入限制并由此推导出了一个非线性的平方和优化程序。然而，这些工作有两个缺点：（1）它们的算法均基于交替下降方法，从而缺乏全局收敛的理论保证；（2）它们无法处理动力学系统的不确定性和一般的凸控制输入边界。我们的框架旨在解决这些缺点。
+
+\section{验证与综合问题：基于采样的方法}
+另一个流行的研究方向则基于对状态空间的采样：它们通过对有限数量的状态进行采样，并使用 Lipschitz条件来限制离散化误差，以此来构建鲁棒的控制障碍函数。 他们使用进化算法~\cite{wei2022acc-uncertainsynthesis}，约束PAC学习~\cite{robey2021ifac-rcbfhybrid}，或是凸优化算法~\cite{lindemann2021arxiv-rcbfsafeexpert}来搜索合法的鲁棒控制障碍函数。 这些算法需要Lipschitz条件，并且它们可能会遭受维数灾难（所需样本数量伴随着状态维数呈指数增长）。
+
+\section{其它方法}
+对于可控线性系统~\cite{clark2021automatica-controllablelinear}和Euler-Lagrange系统~\cite{cortez2020acc-eluerlag}等特定系统，现有工作尝试了手动设计控制障碍函数。对于确定性动力学系统，~\cite{tonkens2022iros-refining}使用了Hamilton-Jacobi-Bellman可达性分析，以此迭代地修正与完善一个候选的控制障碍函数。~\cite{chen21cdc-backup}则尝试挖掘一个备份控制策略。基于深度学习的方法也在不断涌现。基于安全强化学习算法的方法尝试学习\cite{ma2022l4dc-saferl}或适应\cite{chen2021lcss-saferl,westenbroek2021ifac-saferl}一个安全证书以及未经严格验证的控制策略。神经网络控制障碍函数这一类方法，则在学习完一个安全证书后对其进行验证；它们使用了可满足性模理论~\cite{zhao2021fac-provableneuralcbf}和Lipschitz方法~\cite{jin2020arxiv-provableneuralcbf}。到目前为止，这些方法仅限于小型神经网络。
+
+
