@@ -1,0 +1,143 @@
+% !TeX root = ../thuthesis-example.tex
+
+\chapter{多级多项式优化架构}
+\label{sec:formulation}
+
+\section{动力学系统假设}
+现考虑一个具备加性不确定性的仿射动力学系统
+\begin{equation}\label{eq:system}
+    \dot{x} = f(x) + g(x) + J(x) \epsilon
+\end{equation}
+其中$x \in \mathbb{R}^n$为系统状态，$u \in \mathbb{U} \subseteq \mathbb{R}^m$为系统的控制输入信号，$f(x): \mathbb{R}^n \mapsto \mathbb{R}^n$，$g(x): \mathbb{R}^n \mapsto \mathbb{R}^{n \times m}$，$J(x): \mathbb{R}^n \mapsto \mathbb{R}^{n \times d}$以及$\epsilon \in \mathbb{R}^d$。对于系统~\eqref{eq:system}，我们做出以下假设。
+
+\begin{assumption}[多项式系统]\label{assume:dynamics}
+    $f, g, J$中的每一项都是关于$x$的多项式函数。
+\end{assumption}
+
+\begin{assumption}[凸多项式控制输入信号约束]\label{assume:control}
+    $\mathbb{U}$是一个紧凸集，并且它由有限个多项式不等式组成，亦即：$\{ u \in \mathbb{R}^m \mid c_{u,i}(u) \le 0, i=1, \dots, l_u \}$。其中$\{ c_{u,i}(u) \}_{i=1}^{l_u}$为关于$u$的凸多项式函数。并且，存在$u_0$，使得$c_{u,i}(u_0) < 0$对于任意的$i = 1, \dots, l_u$均成立。
+\end{assumption}
+这一假设相当宽泛。这是由于在实际系统中运用到的控制输入信号通常被约束在凸多面体~\cite{dai2022arxiv-clfcbfsynveri}，箱型~\cite{zhao22arxiv-cbfsos}或者椭球中，而它们都是凸集的特例。
+
+\begin{assumption}[不确定程度有界]\label{assume:epsilon}
+    $\parallel \epsilon \parallel \le M_{\epsilon}$。
+\end{assumption}
+
+\section{鲁棒控制障碍函数}
+一个鲁棒控制障碍函数的定义如下：
+\begin{definition}[鲁棒控制障碍函数]\label{def:robustcbf}
+    令$b(x): \mathbb{R}^n \mapsto \mathbb{R}$为一个光滑函数，并令$\mathcal{C} \doteq \{ x \in \mathbb{R}^n \mid b(x) \ge 0 \}$成为它的紧的上水平集。在这样的定义下，$b(x)$对于系统~\eqref{eq:system}是一个鲁棒控制障碍函数，如果存在一个class-$K$函数$\alpha$，使得对于任意的$x \in \mathcal{C}$，都有
+    \begin{equation}\label{eq:rcbforg}
+        \max_{u \in \mathbb{U}} \min_{\parallel \epsilon \parallel \le M_\epsilon} \dot{b}(x) \ge -\alpha(b(x))
+    \end{equation}
+    换而言之，如果系统~\eqref{eq:system}在$\mathcal{C}$内部出发，那么存在这样一个控制信号序列，使得系统后续的状态仍然保留在$\mathcal{C}$内，无论系统不确定性$\epsilon$取什么值。根据Nagumo定理~\cite{blanchini99automatica-set}，\eqref{eq:rcbforg}对于任意的$x \in \mathcal{C}$都成立，当且仅当
+    \begin{equation}
+        \max_{u \in \mathbb{U}} \min_{\parallel \epsilon \parallel \le M_\epsilon} \dot{b}(x) \ge 0, \quad \forall x\in \partial \mathcal{C}
+    \end{equation}
+    亦即，每当系统状态位于$\mathcal{C}$的边界上的时候（$\partial \mathcal{C} \doteq \{x \in \mathbb{R}^n \mid b(x) = 0\}$），都存在一个控制信号$u$，将系统状态拉回到$\mathcal{C}$。
+\end{definition}
+
+\section{一种层次化多项式优化架构}
+\label{sec:formulation:multilevel}
+对于一个参数化的函数$b(x, \theta)$，它满足如下性质：它对于$x$与$\theta$是多项式函数；并且我们假设参数$\theta$属于一个紧的基本半代数集合：$\Theta \subseteq \mathbb{R}^k$，亦即，$\Theta$被有限个多项式等式/不等式决定。从$b(x, \theta)$出发，我们考虑鲁棒控制障碍函数的验证与综合问题。根据定义~\ref{def:robustcbf}，我们可以将二者分别刻画为下列优化问题。
+
+\begin{problem}[验证问题]\label{prob:cbfverification}
+    对于给定的$\theta$，我们定义
+    \begin{equation}\label{eq:verifyvaluefun}
+        V(\theta) := \min_{x \in \partial \mathcal{C}} \max_{u \in \mathbb{U}} \min_{\parallel \epsilon \parallel \le M_\epsilon} \dot{b}(x, \theta)
+    \end{equation}
+    如果在此情况下，$V(\theta) \ge 0$，那么$b(x, \theta)$是一个合法的安全证书；反之，一个从~\eqref{eq:verifyvaluefun}中获得的全局最优解$x^\star$可以使得$V(\theta) < 0$，它将成为“$b(x, \theta)$不是一个鲁棒控制障碍函数”这一判据的见证者。
+\end{problem}
+
+$V(\theta)$被称为验证多项式优化问题的值函数。
+
+\begin{problem}[综合问题]\label{prob:cbfsynthesis}
+    令$V(\theta)$成为~\eqref{eq:verifyvaluefun}所描述的，定义
+    \begin{equation}\label{eq:cbfsynthesis}
+        V^\star = \max_{\theta \in \Theta} V(\theta), \quad \theta^\star \in \arg\max_{\theta \in \Theta} V(\theta)
+    \end{equation}
+    若$V^\star \ge 0$，则$b(x, \theta^\star)$是一个鲁棒控制障碍函数。反之，若$V^\star < 0$，则函数族$b(x, \theta)$中不存在一个鲁棒控制函数。
+\end{problem}
+
+值得注意的是，对于任意的$x \in \partial \mathcal{C}$，只要其满足$\max_u \min_\epsilon \dot{b}(x, \theta) < 0$（并不要求是$x^\star$），它就可以否定“$b(x, \theta)$是一个鲁棒控制障碍函数”这一命题；而对于综合问题，任意$\theta$（并不一定需要$\theta^\star$）满足$V(\theta) \ge 0$将生成一个合法的控制障碍函数$b(x, \theta)$。实际上，我们的综合方法能够返回一个合法的$\theta$的集合，集合之中的每一个元素都满足$V(\theta) \ge 0$。然而，我们仍选择用问题~\ref{prob:cbfverification}-\ref{prob:cbfsynthesis}来给出我们的定义，因为这将使得我们能更加顺畅地给出我们地算法。
+
+\section{约简至单级与最小-最大多项式优化问题}
+\label{sec:formulation:reduction}
+问题~\ref{prob:cbfverification}-\ref{prob:cbfsynthesis}是多级优化问题~\cite{bennett22mp-hierarchical}的两个特例。一般而言，该类问题非常难以分析和求解。然而，由于假设~\ref{assume:control}和~\ref{assume:epsilon}的存在，我们可以证明~\eqref{eq:verifyvaluefun}可以被约简至单级多项式优化问题，而~\eqref{eq:cbfsynthesis}可以被约简至一个最小-最大多项式优化问题。
+
+\subsection{分离$u$与$\epsilon$}
+我们首先将$\dot{b}(x, \theta)$展开：
+\begin{equation}\label{eq:dotbexpand}
+    \dot{b}(x, \theta) = \underbrace{\frac{\partial b}{\partial x}(x, \theta) f(x)}_{:=L_f b(x, \theta)} + 
+    \underbrace{\frac{\partial b}{\partial x}(x, \theta) g(x)}_{:= L_g b(x, \theta)} u +
+    \underbrace{\frac{\partial b}{\partial x}(x, \theta) J(x)}_{:= L_j b(x, \theta)} \epsilon
+\end{equation}
+根据~\eqref{eq:dotbexpand}，我们重新构建~\eqref{eq:verifyvaluefun}中的$V(\theta)$：
+\begin{align}
+    & \min_{x \in \partial \mathcal{C}} \max_{u \in \mathbb{U}} \min_{\parallel \epsilon \parallel \le M_\epsilon} L_fb(x, \theta) + L_gb(x, \theta)u + L_Jb(x, \theta)\epsilon \nonumber \\
+    = & \min_{x \in \partial \mathcal{C}} \max_{u \in \mathbb{U}} \left[ L_fb(x, \theta) + L_gb(x, \theta)u + \min_{\parallel \epsilon \parallel \le M_\epsilon}L_Jb(x, \theta)\epsilon \right] \label{eq:developVstepone} \\
+    = & \min_{x \in \partial \mathcal{C}} \left[ L_fb(x, \theta) + \underbrace{\max_{u \in \mathbb{U}} L_gb(x, \theta)u}_{:=V_u^\star} + \underbrace{\min_{\parallel \epsilon \parallel \le M_\epsilon}L_Jb(x, \theta)\epsilon}_{:=V_\epsilon^\star} \right] \label{eq:developVsteptwo}
+\end{align}
+其中~\eqref{eq:developVstepone}成立是因为$L_fb(x, \theta)$和$L_gb(x, \theta)$相对$\min_{\parallel \epsilon \parallel \le M_\epsilon}$来说都是常数。而~\eqref{eq:developVsteptwo}成立是因为$L_fb(x, \theta)$和$\min_{\parallel \epsilon \parallel \le M_\epsilon} L_Jb(x, \theta) \epsilon$对于$\max_{u \in \mathbb{U}}$来说都是常数。在文章后续的篇幅中，我们将说明~\eqref{eq:developVsteptwo}$V_\epsilon^\star$以及$V_u^\star$能被解析地求解。
+
+\subsection{解析求解$V_\epsilon^\star$}
+$\parallel \epsilon \parallel \le M_\epsilon$定义了一个$d$维的球，其半径为$M_\epsilon$。容易验证，若将$\epsilon$选为以下值：
+\begin{equation}
+    \epsilon^\star = \begin{cases}
+        - M_\epsilon \frac{L_Jb(x, \theta)}{\parallel L_Jb(x, \theta) \parallel} & \text{if } \parallel L_Jb(x, \theta) \parallel \ne 0 \\
+        \text{arbitrary} & \text{otherwise}
+    \end{cases}
+\end{equation}
+则会有：
+\begin{equation}\label{eq:Vepsstar}
+    V^\star_\epsilon = -M_\epsilon \parallel L_Jb(x, \theta) \parallel
+\end{equation}
+
+\subsection{解析求解$V_u^\star$}
+根据假设~\ref{assume:control}，我们可以将$\mathbb{U}$写为
+\begin{equation}
+    \mathbb{U} := \left\{ u \in \mathbb{R}^m \mid c_{u,i}(u) \le 0, i=1, \dots, l_u \right\}
+\end{equation}
+其中每一个$c_{u.i}$是一个凸的多项式。假设Slater约束条件~\cite{boyd04book-convex}成立，亦即，存在一个$u_0$使得$c_{u,i} < 0, i = 1, \dots, l_u$，纳闷$u^\star$对于$\max_{u \in \mathbb{U}} L_gb(x,\theta)u$是最优的，当且仅当存在一对偶变量$\zeta^\star \in \mathbb{R}^{l_u}$，使得以下的KKT条件成立~\cite{boyd04book-convex}：
+\begin{subequations}\label{eq:kktconds}
+    \begin{eqnarray}
+        \text{primal feasibility: }& c_{u,i}(u) \le 0, i = 1, \dots, l_u \label{eq:kktprimal} \\
+        \text{dual feasibility: }& \zeta_i \ge 0, i = 1, \dots, l_u \label{eq:kktdual} \\
+        \text{stationary: }& -L_gb(x, \theta) + \sum_{i=1}^{l_u}\zeta_i \frac{\partial c_{u,i}}{\partial u}(u) = 0 \label{eq:kktstationary} \\
+        \text{complementarity: }& \zeta_i c_{u,i}(u) = 0, i = 1, \dots, l_u \label{eq:kktcomp}
+    \end{eqnarray}
+\end{subequations}
+观察可得，~\eqref{eq:kktconds}是一系列多项式等式/不等式的集合。令$\mathbb{K}(x, \theta) \subseteq \mathbb{R}^m \times \mathbb{R}^{l_u}$为最优的$u$和$\zeta$的集合（被~\eqref{eq:kktconds}定义），我们有
+\begin{equation}\label{eq:Vustar}
+    V_u^\star = L_gb(x, \theta) u^\star, \quad (u^\star, \zeta^\star) \in \mathbb{K}(x, \theta)
+\end{equation}
+
+\begin{remark}
+    一般来说，最优控制信号$u^\star$是一个关于$x$和$\theta$的不光滑的函数。考虑$c_{u,i} = u_i^2 - 1, i = 1, \dots, m$，亦即，$\mathbb{U} = [-1, 1]^m$是一个$m$维的箱型，则$u^\star$在这个$d$维系统的每一个维度上，必为Bang-Bang控制。并且，它的值直接被$L_gb(x, \theta)$的正负性所决定。因此，（1）假设$u^\star$是一个光滑函数的方法（如假设它是一个多项式函数~\cite{jarvis03cdc-some}）将会过于保守；（2）近期出现的工作~\cite{zhao22arxiv-cbfsos}尝试通过遍历所有的$2^m$个Bang-Bang控制的组合来生成控制障碍函数。通过显式地引入对偶变量$\zeta$，我们的推导结果使用了KKT条件来构建起非光滑控制问题和光滑多项式优化问题的桥梁。
+\end{remark}
+
+将~\eqref{eq:Vepsstar}和~\eqref{eq:Vustar}带入到~\eqref{eq:developVsteptwo}，我们有
+\begin{align}
+    V(\theta) = \min_{\substack{x\in\mathbb{R}^n, z\in\mathbb{R} \\ u^\star\in\mathbb{R}^m, \zeta^\star\in\mathbb{R}^{l_u}}} & L_fb(x,\theta) + L_gb(x,\theta)u^\star - M_\epsilon z \label{eq:verifypop} \\
+    \text{subject to } & z^2 = \parallel L_Jb(x,\theta) \parallel^2 \label{eq:zlift} \\
+    & x \in \mathbb{X}, b(x, \theta) = 0 \label{eq:xcon} \\
+    & (u^\star, \zeta^\star) \in \mathbb{K}(x, \theta)
+\end{align}
+其中，$x \in \partial \mathcal{C}$在中~\eqref{eq:xcon}被显式地写出；~\eqref{eq:xcon}强制$z = \pm \parallel L_Jb(x, \theta) \parallel$，且位于优化目标~\eqref{eq:verifypop}中的$\min$将会使得$z = \parallel L_Jb(x, \theta) \parallel$（因此~\eqref{eq:Vepsstar}将会隐式地得到满足）。
+
+\subsection{标准多项式优化问题}
+定义$y = \left[ x; z; u^\star; \zeta^\star \right] \in \mathbb{R}^N$，其中$N = n + 1 + m + l_u$。如此一来，我们可以将验证问题~\eqref{eq:verifypop}转化成了以下标准多项式优化问题
+\begin{equation}\label{eq:standardpop}
+    V(\theta) = \min_{y \in \mathbb{R}^N} \left\{ 
+        \varphi(y, \theta) \ \middle\vert \ \begin{array}{c}
+            h_i(y, \theta) = 0, i = 1,\dots, l_h \\
+            s_i(y, \theta) \ge 0, i = 1, \dots, l_s
+        \end{array}
+     \right\}
+\end{equation}
+因此，原先的综合问题~\eqref{eq:cbfsynthesis}可被等价为一个最小-最大多项式优化问题（其中“$\max$”项是关于$\theta \in \Theta$的）。
+
+\begin{remark}[非多项式动力学系统]
+    我们的算法框架并不仅仅局限于多项式动力学系统。当原始动力学系统~\eqref{eq:system}为非多项式时，只要验证问题~\eqref{eq:verifypop}能够通过变量代换转换成一个多项式优化问题，我们的框架仍然适用。例如，假设~\eqref{eq:system}和候选控制障碍函数$b(x, \theta)$包含了三角函数项。不失一般性地，假设这些项位于$\bar{x} \in x$中。则只要问题~\eqref{eq:verifypop}中的函数对于$\sin(\bar{x})$和$\cos(\bar{x})$是多项式关系，通过构造$\mathfrak{s} = \sin(\bar{x})$以及$\mathfrak{c} = \cos(\bar{x})$，以及引入额外的多项式约束$\mathfrak{s}^2 + \mathfrak{c}^2 = 1$，我们可以将~\eqref{eq:verifypop}转换为一个多项式优化问题。不过在文章的开头，我们仍选择称述假设~\ref{assume:dynamics}，因为这样能简化我们的叙述流程。
+\end{remark}
+
