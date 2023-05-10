@@ -1,0 +1,120 @@
+% !TeX root = ../thuthesis-example.tex
+
+\chapter{半正定松弛}
+\label{sec:sdprelax}
+
+现在我们使用半正定松弛来解决验证问题{\color{red} AAA}和综合问题{\color{red} AAA}。本节中介绍的大部分结果均来自自~\cite{lasserre01siopt-global,lasserre11jgo-minmaxpop} 中提出的现有技术。 我们在这里的贡献是首次将（最小-最大）多项式问题的全局优化与鲁棒控制障碍函数的验证和综合问题联系起来。 我们希望这些联系能启发研究类似问题的科研人员。
+
+\section{可行集合和阿基米德条件}
+在深入推导细节之前，我们将$s_0 := 1$加入到多项式优化问题~\eqref{eq:standardpop}中，并假设以下条件成立。
+\begin{assumption}[可行性和阿基米德条件]\label{assume:archimedeanness}
+    对于任意的$\theta \in \Theta$，（1）多项式优化问题~\eqref{eq:standardpop}的可行集合是非空的；（2）存在$M_y > 0$，使得对于某些关于$y$的多项式$\left\{ \mu_i \right\}_{i=1}^{l_h}$和某些关于$y$的平方和多项式$\left\{ \sigma_i \right\}_{i=0}^{l_s}$，使得$M_y - \parallel y \parallel^2 = \sum_{i=1}^{l_h} \mu_i h_i + \sum_{i=0}^{l_s} \sigma_i s_i$成立。
+\end{assumption}
+
+假设~\ref{assume:archimedeanness}十分宽泛。第一，只要$\partial \mathcal{C} = \left\{ x \in \mathbb{R}^n \mid b(x, \theta) = 0 \right\}$是非空的，~\eqref{eq:standardpop}的可行集合就会是非空的。第二，如果我们预先知道了$y$的一个上界，亦即，$M_y$的某一个较松的估计是已知的，则增加一个冗余的约束$M_y - \parallel y \parallel^2 \ge 0$可以使得阿基米德条件自然成立。因为$\partial \mathcal{C}$与$\mathbb{U}$都是紧的，我们可以轻松得到$x$与$u^\star$是有界的。通过~\eqref{eq:zlift}，我们可以得到$z$也是有界的。这是因为$z^2$是$x$的一个光滑函数（并且$x$属于一个紧集）。下面的性质给出了对偶变量$\zeta^\star$有界的充分条件。
+
+\begin{proposition}[$\zeta^\star$有界]\label{prop:boundeddual}
+    如果$\mathbb{U}$是下述数学形式中的一个：
+    \begin{enumerate}
+        \item 多面体：$c_{u,i}(u) = w_i^T u + d_i \le 0, i = 1, \dots, l_u$，且其中没有退化的极值点。
+        \item 箱型：$c_{u,i}(u) = u_i^2 - w_i^2, i = 1, \dots, m$，且$w_i > 0$。
+        \item 椭球：$c_u = u^T W u - 1$，且$W \succ 0$。
+    \end{enumerate}
+    则存在一个常数$M_\zeta$，使得$\parallel \zeta^\star \parallel \le M_\zeta$。
+\end{proposition}
+\begin{proof}
+    见附录{\color{red} DDD}。
+\end{proof}
+
+{\color{red} AAA}针对我们的测试问题，计算了上述所有的上界。
+
+\section{验证问题：Lasserre's Hierarchy}
+\label{sec:sdpverify}
+
+为了求解多项式优化问题~\eqref{eq:standardpop}，我们采取了Lasserre's hierarchy，一种矩-平方和函数半正定松弛手段~\cite{lasserre01siopt-global}。由于文章篇幅有限，在这里我们只给出这一类松弛手段的简单介绍，有兴趣的读者可以参考~\cite{lasserre01siopt-global}或者~\cite{yang22pami-certifiably}以了解更多细节。
+
+当$\theta$为一定值时，令$t_{\max} = \max\left\{ \text{deg}\varphi, \{\text{deg} h_i\}_{i=1}^{l_h}, \{\text{deg}s_i\}_{i=0}^{l_s} \right\}$作为多项式优化问题~\eqref{eq:standardpop}的最大度，$\kappa \in \mathbb{N}$为任意正整数，使得$2 \kappa \ge t_{\max}$，且$\kappa_0$为满足上述条件的$\kappa$的最小值。定义$[y]_\kappa$为关于$y$的单项式组成的向量，且其度最高到$\kappa$，且$Y_\kappa = [y]_\kappa [y]_\kappa^T$为关于$y$的矩矩阵，其度为$\kappa$。更进一步地，令
+\begin{equation}
+    S_i = s_i(y, \theta) \cdot Y_{\kappa - \lceil \text{deg}s_2/2 \rceil}, i = 1, \dots, l_s
+\end{equation}
+作为与$s_i$关联地局部化矩阵（如此一来，$S_i$中所有的单项式的度都不超过$2\kappa$）。令$Y = \left( Y_\kappa, S_1, \dots, S_{l_s} \right)$，考虑下述半正定优化问题：
+\begin{equation}\label{eq:sdpverify}
+    \rho_\kappa = \min_{Y}\left\{ \left< C, Y \right> \mid Y \succeq 0, \mathcal{A}(Y) = e \right\}
+\end{equation}
+其中$C = (C_0, C_1, \dots, C_{l_s})$为常数，与$Y$有着相同的大小，而$\left< C, Y \right> = \varphi$。
+\footnote{$\left< C, Y \right> := \text{tr}(C_0 Y_0) + \dots + \text{tr}(C_{l_s} S_{l_s})$。我们可以有$C_1 = \cdots = C_{l_s} = 0$且$C_0$的项为$\varphi(y, \theta)$的系数。}
+$\mathcal{A}(Y) = e$收集了所有关于$Y$的线性组合（如，$S_i$中的每一项实际上都是$Y_\kappa$中的项的线性组合）。很明显半正定优化问题~\eqref{eq:sdpverify}是多项式优化问题~\eqref{eq:standardpop}的一个凸松弛，因为多项式优化问题中的每个可行解$y$都可以生成对半正定优化问题可行的$Y$的矩矩阵和局部化矩阵。下面的定理指出，当$\kappa \rightarrow \infty$，求解该半正定优化问题可以还原出多项式优化问题的全局最优解。
+
+\begin{theorem}[Lasserre's Hierarchy~\cite{lasserre01siopt-global,henrion05-detecting}]\label{thm:lasserre}
+    令$\rho_\kappa^\star$和$Y^\star = \left( Y_\kappa^\star, S_1^\star, \dots, S_{l_s}^\star \right)$分别作为为半正定优化问题~\eqref{eq:sdpverify}的最优值和最优解，则
+    \begin{enumerate}
+        \item 对于任意的$\kappa$，有$\rho_\kappa^\star \le V(\theta)$。且当$\kappa \rightarrow \infty$，我们有$\rho_\kappa^\star \rightarrow V(\theta)$。
+        \item 若$Y_\kappa^\star$满足平面条件，亦即，对于某个满足$\kappa_0 \le \kappa' \le \kappa$的$\kappa'$，有$r = \text{rank}(Y_{\kappa' - \kappa_0}^\star) = \text{rank}(Y_{\kappa'}^\star)$，则$\rho_\kappa^\star = V(\theta)$，且我们说该松弛是紧的或是准确的。更进一步的，从$Y_\kappa^\star$中，我们能抽取出$r$个多项式优化问题~\eqref{eq:standardpop}的全局最优解。
+    \end{enumerate}
+\end{theorem}
+
+虽然定理~\ref{thm:lasserre}中提供的收敛性是渐进的，但在许多实际问题中~\cite{yang22mp-inexact}，我们可以观察到有限收敛，亦即，$\rho_\kappa^\star$与原始的多项式优化问题的全局最优解重合，且在有限（并且通常很小）的松弛阶数$\kappa$下就能观察到。这可以通过多项式优化问题~\cite{nie14mp-optimality}的附加假设来证明。出于验证目的，$\rho^\star_\kappa \geq 0$（对于某些$\kappa$）便足以证明鲁棒控制障碍函数的正确性。
+
+\section{综合问题：多项式近似方法}
+\label{sec:sdpsynthesis}
+
+一种生成鲁棒控制障碍函数$b(x,\theta)$的简单方法是不断在参数空间$\Theta$中随机采样$\theta \in \Theta$，直至获得某个使$V(\theta) \ge 0$的$\theta$。当$\Theta$是一个有限空间的时候，这类方法的效果很好。另一类颇具潜力的方法是可微优化，亦即，在求解完验证问题之后，我们计算$\partial V(\theta) / \partial \theta$，随后使用梯度上升算法去优化$\theta$。然而，由于验证问题是一个非凸的多项式优化问题，在求解最小-最大验证问题时，这类方法的收敛性没有较好的理论保证（可微优化在内部问题为凸优化问题时，能取得较好的效果~\cite{bennett22mp-hierarchical}）。在接下来的篇幅中，我们引入~\cite{lasserre11jgo-minmaxpop}中基于多项式优化的一类方法。该类方法的目标是使用一系列的多项式去生成$V(\theta)$的下界，紧接着使用Lasserre's Hierarchy来最大化这一系列的多项式下界。
+
+令$\psi$为在$\Theta$之上的均匀分布。如此一来，对于任意的$\theta^\beta = \theta_1^{\beta_1} \theta_2^{\beta_2} \cdots \theta_3^{\beta_3}$，
+\begin{equation}\label{eq:computemoments}
+    \gamma_\beta = \int_{\Theta} \theta^\beta d \psi(\theta), \beta \in \mathbb{N}^k
+\end{equation}
+均可被计算。
+\footnote{
+    若$\gamma_\beta$无法在$\Theta$上被计算，那么我们可以在某种程度上“增强”$\Theta$，使之成为一个简单集合$\tilde{\Theta}$，且有$\tilde{\Theta} \supset \Theta$。（例如，将$\tilde{\Theta}$设置为一个箱型或是一个球体，使得$\gamma$在$\tilde{\Theta}$山能够被轻松计算。
+}
+令$\nu \in \mathbb{N}$，使得$2\nu$不会小于多项式优化问题~\eqref{eq:sdpverify}的最大度，再令$\nu_0$为这样的$\nu$中的最小值。
+\footnote{
+    注意到一般来说，$\nu_0 \ne \kappa_0$（其中$\kappa_0$在章节~\ref{sec:sdpverify}中定义）。这是因为当我们使用多项式优化问题~\eqref{eq:standardpop}处理验证问题时，我们在计算最大度时是将$\theta$看作是一个常数的。而当我们处理综合问题时，我们将$\theta$看作与$y$一样，是一个未知的变量。例如，单项式$\psi(y, \theta) = y^2\theta^4$对于$y$来说，其最大度为$2$，而对于$[y; \theta]$来说，其最大度为$6$。
+}
+定义$\mathbb{N}_{2\nu}^k$为$k$维正整数，它们的和不超过$2\nu$。考虑以下的平方和优化问题：
+\begin{eqnarray}\label{eq:soslowerbound}
+    \max_{\lambda, \sigma, \mu} & \sum_{\beta \in \mathbb{N}_{2\nu}^k} \lambda_\beta \gamma_\beta \\
+    \text{subject to } & \substack{
+        \varphi(y, \theta) - \sum_{\beta \in \mathbb{N}_{2\nu}^k} \lambda_\beta \theta^\beta =  \\
+        \sum_{i=0}^{\tilde{l}_s} \sigma_i(y, \theta) s_i(y, \theta) + \sum_{i=1}^{l_h} \mu_i(y, \theta) h_i(y, \theta)
+    } \\
+    & \sigma_i \in \Sigma[y, \theta], \text{deg} \sigma_i s_i \le 2\nu, i = 0, \dots, \tilde{l}_s \\
+    & \mu_i \in \mathbb{R}[y, \theta], \text{deg} \mu_i h_i \le 2\nu, i = 1, \dots, l_h
+\end{eqnarray}
+其中$\mathbb{R}[y, \theta]$（分别地，考虑$\Sigma[y, \theta]$）是由实多项式组成的集合（分别地，考虑平方和多项式组成的集合），其变量为$[y; \theta]$。值得注意的是，在~\eqref{eq:soslowerbound}中，我们将$l_s$置换为了$\tilde{l}_s$。这是因为我们需要将$\theta \in \Theta$带来的约束都一并考虑。令$\lambda^\star$为上式的（其中一个）全局最优解。定义
+\begin{equation}\label{eq:polylowerbound}
+    V_\nu(\theta) := \sum_{\beta \in \mathbb{N}_{2\nu}^k} \lambda_\beta^\star \theta^\beta, \quad \nu \ge \nu_0
+\end{equation}
+为关于$\theta$的多项式，且其系数为$\lambda^\star$。下文的定理说明了$V_\nu(\theta)$是未知的（且通常不光滑的）$V(\theta)$的一个多项式下界。更近一步的，当$\nu$不断增大时，$V_\nu(\theta)$将会收敛于$V(\theta)$。
+
+\begin{theorem}[全局收敛性~\cite{lasserre11jgo-minmaxpop}]
+    \label{thm:globalconvergence}
+    令假设~\ref{assume:archimedeanness}成立，且$V_\nu (\theta)$的形式由\eqref{eq:polylowerbound}给出，我们有
+    \begin{enumerate}
+        \item 对于任意的$\nu \ge \nu_0$以及任意的$\theta \in \Theta$，有$V_\nu(\theta) \le V(\theta)$。
+        \item 当$\nu \rightarrow \infty$时，$\int_\Theta | V(\theta) - V_\nu(\theta) | d \psi(\theta) \rightarrow 0$。
+        \item 令$\tilde{V}_\nu(\theta) := \max\left\{ V_{\nu_0}(\theta), \dots, V_\nu(\theta) \right\}$，则对于任意的$\theta \in \Theta$，我们有$V_\nu(\theta) \le \tilde{V}_\nu(\theta) \le V(\theta)$，且当$\nu \rightarrow \infty$时，$\tilde{V}_\nu(\theta)$几乎一致收敛于$V(\theta)$（在测度$\psi$下）。
+    \end{enumerate}
+    更进一步地，令
+    \begin{equation}\label{eq:maxlowerbound}
+        V_\nu^\star := \max_{\theta \in \Theta} V_\nu(\theta), \quad \nu \ge \nu_0
+    \end{equation}
+    并令$\theta_\nu^\star$为其全局最优解。记
+    \begin{equation}\label{eq:bestmaximizer}
+        \hat{V}_\nu^\star := \max_{\nu_0 \le l \le \nu} V_l^\star = V_{\tau(\nu)}(\theta_{\tau(\nu)}^\star)
+    \end{equation}
+    对某些$\tau(\nu) \in \left\{ \nu_0, \dots, \nu \right\}$成立。则我们有
+    \begin{enumerate}
+        \setcounter{enumi}{3}
+        \item 当$\nu \rightarrow \infty$时，$\hat{V}_\nu^\star \rightarrow V^\star$。其中$V^\star$定义在~\eqref{eq:cbfsynthesis}中。
+        \item 若$V(\theta)$在$\Theta$上连续，则$V^\star = V(\theta^\star)$对某些$\theta^\star \in \Theta$成立；且序列$(\theta_{t(\nu)}^\star) \subset \Theta$中的任意聚点$\bar{\theta}$也是~\eqref{eq:cbfsynthesis}的全局最优解。特别的，若$\theta^\star$是唯一的，则$\theta_{t(\nu)}^\star \rightarrow \theta^\star$，当$\nu \rightarrow \infty$时。
+    \end{enumerate}
+\end{theorem}
+
+一些有关定理~\ref{thm:globalconvergence}的评论。
+第一，每一个$V_\nu(\theta)$都是$V(\theta)$在集合$\Theta$上的下界。并且，当$\nu \rightarrow \infty$时，$\int_\Theta |V(\theta) - V_\nu(\theta)| d\psi(\theta)$将会趋向于0。
+第二，假设我们计算了一系列的$V_l(\theta)$，其中$l = \nu_0, \dots, \nu$，那么逐点取这一系列函数最大值得到的$\tilde{V}_\nu(\theta) = \max_{\nu_0 \le l \le \nu}V_l(\theta)$可以作为$V(\theta)$的一个更紧的下界，并且其能够在$\Theta$上几乎处处收敛于$V(\theta)$。
+第三，如果我们能够计算关于一系列下界$\left\{ V_l(\theta) \right\}_{l=l_0}^\nu$的全局最优解，那么这些最优解（见~\eqref{eq:bestmaximizer}）能够收敛于最小-最大多项式优化问题的全局最优解。为了计算~\eqref{eq:maxlowerbound}的全局最优解，我们再一次使用章节~\ref{sec:sdpverify}中引入的Lasserre's Hierarchy。由于~\eqref{eq:maxlowerbound}只是关于$\theta$的多项式优化问题，其维度较低。因此，通常我们能获得~\eqref{eq:maxlowerbound}的全局最优解。
+第四，与定理~\ref{thm:lasserre}中不同：在定理~\ref{thm:lasserre}中，我们有可能通过平面条件检测与验证全局最优解是否取到；而在定理~\ref{thm:globalconvergence}中，我们无法在数值上检测$V^\star = \hat{V}_\nu^\star$是否取得。这也就意味着，我们的算法无法说明函数族$\left\{ b(x, \theta) \mid \theta \in \Theta \right\}$中，不存在一个合法的鲁棒控制障碍函数。
+第五，假设$\left\{ \theta \mid V_\nu(\theta) \ge 0 \right\}$在某一个$\nu$下非空，那么该多项式下界$V_\nu(\theta)$使我们能够在上述集合中选出一个$\theta$来优化另一些有关$\theta$的指标$\Psi(\theta)$。这可以通过求解“$\min_{\theta \in \Theta} \left\{ \Psi(\theta) \mid V_\nu(\theta) \ge 0 \right\}$来实现。例如，在{\color{red} AAA}中我们将会看到，$\Psi(\theta)$能够表征集合$\mathcal{C}$的大小。
