@@ -2,7 +2,7 @@
 
 \chapter{实验与算法应用}
 
-在这个章节中，我们将我们的验证与综合方法应用至受控Van der Pol振荡器上。我们首先考虑了没有加性不确定性的受控Van der Pol振荡器{\color{red} AAA}，并且表明我们的算法能够复现~\cite{clark22arxiv-cbf}中的圆形控制障碍函数。而当不确定性存在时，我们展示了如何综合出一系列椭圆形的鲁棒控制障碍函数，它们能够产生一系列严格为正的值函数。
+在这个章节中，我们将我们的验证与综合方法应用至受控Van der Pol振荡器上。我们首先考虑了没有加性不确定性的受控Van der Pol振荡器（章节~\ref{sec:cleanvanderpol}），并且表明我们的算法能够复现~\cite{clark22arxiv-cbf}中的圆形控制障碍函数（章节~\ref{sec:uncertainvanderpol}）。而当不确定性存在时，我们展示了如何综合出一系列椭圆形的鲁棒控制障碍函数，它们能够产生一系列严格为正的值函数。
 
 \section{无加性不确定性的受控Van der Pol振荡器}
 \label{sec:cleanvanderpol}
@@ -30,7 +30,7 @@
     \label{eq:cleanvdpocbf}
     b(x, \theta) = \theta - \parallel x \parallel^2, \quad \theta \in \Theta := [0, \theta_{\max}]
 \end{equation}
-很明显，假设~\ref{assume:archimedeanness}成立。在附录{\color{red} DDD}中，我们计算了多项式优化问题中~\eqref{eq:verifypop}中$y$的界。
+很明显，假设~\ref{assume:archimedeanness}成立。在附录~\ref{app:bound:y:cleanvdp}中，我们计算了多项式优化问题中~\eqref{eq:verifypop}中$y$的界。
 
 \subsection{验证问题}
 我们选取了$u_{\max} = 5$，$\theta_{\max} = 2$，并且选取了$\kappa = 4$作为验证多项式优化问题~\eqref{eq:verifypop}中半正定松弛的度。
@@ -42,7 +42,7 @@
 \input{data/fig-vanderpol_clean.tex}
 
 \subsection{综合问题}
-我们在$\nu = 3, 4, 5, 6$处求解平方和优化问题~\eqref{eq:soslowerbound}，以获得$V(\theta)$的多项式下界。附录{\color{red} DDD}中讲述了如何获得~\eqref{eq:computemoments}中的矩$\gamma_\beta$。图像~\ref{fig:vanderpol_clean}（a）中的一系列实线绘制了当$\nu = 3, 4, 5, 6$时，计算得到的$V_\nu(\theta)$。这些多项式下界很好地近似了未知的$V(\theta)$（除了$\theta = 1$附近，因为此时的$V(\theta)$不是光滑函数）。
+我们在$\nu = 3, 4, 5, 6$处求解平方和优化问题~\eqref{eq:soslowerbound}，以获得$V(\theta)$的多项式下界。附录~\ref{sec:app:computemoments}中讲述了如何获得~\eqref{eq:computemoments}中的矩$\gamma_\beta$。图像~\ref{fig:vanderpol_clean}（a）中的一系列实线绘制了当$\nu = 3, 4, 5, 6$时，计算得到的$V_\nu(\theta)$。这些多项式下界很好地近似了未知的$V(\theta)$（除了$\theta = 1$附近，因为此时的$V(\theta)$不是光滑函数）。
 
 之后我们尝试使用Lasserre's Hierarchy来最大化每一个$V_\nu(\theta)$，其中$\kappa = \nu + 2$。在 $\nu=3$ 处，我们得到 $\theta_\nu^\star = \{ 1.3997;1.8806 \}$ 和 $V_\nu^\star = \{1.2\times 10^{-8},3.2 \times 10^{-8} \}$。 在 $\nu=4$ 处，我们得到 $\theta_\nu^\star = \{ 1.3275 \}$ 和 $V_\nu^\star = \{-3.9\times 10^{-6} \}$。 在 $\nu=5$ 处，我们得到 $\theta_\nu^\star = \{ 1.2638, 1.6770, 1.9359 \}$ 和 $V_\nu^\star = \{-2.2\times 10^{-6} , -1.8 \times 10^{-6}, 8.8 \times 10^{-6} \}$。 在 $\nu=6$ 处，我们得到 $\theta_\nu^\star = \{ 0,1.2280 \}$ 和 $V_\nu^\star = \{-7.8\times 10^{-6}, - 7.4\times 10^{-8}\}$。
 
@@ -78,7 +78,7 @@
     对于系统~\eqref{eq:vdpodynamics}和（候选的）圆形控制障碍函数~\eqref{eq:cleanvdpocbf}，对于任意的$\theta \in \Theta$，有$V(\theta) \le 0$。
 \end{proposition}
 \begin{proof}
-    见附录{\color{red} DDD}。
+    见附录~\ref{app:proofwrongvdpocbf}。
 \end{proof}
 
 那么，我们是否能找到一个鲁棒的控制障碍函数，使得$V(\theta)$的值严格为正呢？答案是肯定的。
@@ -98,7 +98,7 @@
         \theta \in \mathbb{R}^3 \mid \theta_1, \theta_2 \in [\underline{\theta}, \overline{\theta}]^2, \theta_3^2 \le \xi^2 \theta_1 \theta_2
      \right\}
 \end{equation}
-其中$0 < \underline{\theta} < \overline{\theta}$且$0 < \xi < 1$。明显地，$A \succ 0$对$(\theta_1, \theta_2, \theta_3) \in \Theta$都成立。且$b(x, \theta)$定义了椭球的边界。更进一步地，假设~\ref{assume:archimedeanness}成立————附录{\color{red} DDD}证明了这一点：其计算了多项式优化问题~\eqref{eq:verifypop}中$y$的界。s使用这个函数族，我们将获得$V(\theta) > 0$。
+其中$0 < \underline{\theta} < \overline{\theta}$且$0 < \xi < 1$。明显地，$A \succ 0$对$(\theta_1, \theta_2, \theta_3) \in \Theta$都成立。且$b(x, \theta)$定义了椭球的边界。更进一步地，假设~\ref{assume:archimedeanness}成立————附录~\ref{app:bound:y:uncertainvdp}证明了这一点：其计算了多项式优化问题~\eqref{eq:verifypop}中$y$的界。s使用这个函数族，我们将获得$V(\theta) > 0$。
 
 \subsection{综合问题}
 对于验证问题，此处不像章节~\ref{sec:cleanvanderpol}那么方便。这是因为对于一维的$\theta$，我们可以通过均匀采样来使得我们的样本覆盖整个参数空间$\Theta \in [0, \theta_{\max}]$。然而，若要覆盖参数空间~\eqref{eq:ellipsoidalparam}，我们则需要采样更多的样本。因此，此处我们选择直接综合多项式下界。所选参数如下：$u_{\max} = 5, M_\epsilon = 0.1, \underline{\theta} = 0.25, \overline{\theta} = 0.75, \xi = 0.6$。（1）$\nu = 3$时，如图像~\ref{fig:vanderpol_uncertain}（a）所示，我们稠密地在$\left\{ \theta \mid V_\nu(\theta) \ge 0 \right\}$内采样，色彩图显示了$\Theta$内有大量的点（如图中黄色的点），使得$V_\nu(\theta)$严格大于$0$。特别地$V_\nu(\theta)$的全局最优解在$\theta^\star_\nu = [0.2500;0.2757;0.1323]$处取得，其值为$V^\star_\nu = 0.2376$。（2）图像~\ref{fig:vanderpol_uncertain}（b）展示了$\nu = 4$时的散点图。我们可以看到，能够被验证的椭圆形的鲁棒控制障碍函数的集合变得更大了。$V_\nu(\theta)$的全局最优解在$\theta^\star_\nu = [0.3278;0.2500;0.1718]$处取得，其值为$V^\star_\nu = 1.0606$。

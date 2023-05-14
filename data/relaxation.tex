@@ -3,7 +3,7 @@
 \chapter{半正定松弛}
 \label{sec:sdprelax}
 
-现在我们使用半正定松弛来解决验证问题{\color{red} AAA}和综合问题{\color{red} AAA}。本节中介绍的大部分结果均来自自~\cite{lasserre01siopt-global,lasserre11jgo-minmaxpop} 中提出的现有技术。 我们在这里的贡献是首次将（最小-最大）多项式问题的全局优化与鲁棒控制障碍函数的验证和综合问题联系起来。 我们希望这些联系能启发研究类似问题的科研人员。
+现在我们使用半正定松弛来解决验证问题（章节~\ref{sec:sdpverify}）和综合问题（~\ref{sec:sdpsynthesis}）。本节中介绍的大部分结果均来自自~\cite{lasserre01siopt-global,lasserre11jgo-minmaxpop} 中提出的现有技术。 我们在这里的贡献是首次将（最小-最大）多项式问题的全局优化与鲁棒控制障碍函数的验证和综合问题联系起来。 我们希望这些联系能启发研究类似问题的科研人员。
 
 \section{可行集合和阿基米德条件}
 在深入推导细节之前，我们将$s_0 := 1$加入到多项式优化问题~\eqref{eq:standardpop}中，并假设以下条件成立。
@@ -23,10 +23,10 @@
     则存在一个常数$M_\zeta$，使得$\parallel \zeta^\star \parallel \le M_\zeta$。
 \end{proposition}
 \begin{proof}
-    见附录{\color{red} DDD}。
+    见附录~\ref{app:proof:prop:boundeddual}。
 \end{proof}
 
-{\color{red} AAA}针对我们的测试问题，计算了上述所有的上界。
+章节~\ref{sec:experiments}针对我们的测试问题，计算了上述所有的上界。
 
 \section{验证问题：Lasserre's Hierarchy}
 \label{sec:sdpverify}
@@ -117,4 +117,4 @@ $\mathcal{A}(Y) = e$收集了所有关于$Y$的线性组合（如，$S_i$中的�
 第二，假设我们计算了一系列的$V_l(\theta)$，其中$l = \nu_0, \dots, \nu$，那么逐点取这一系列函数最大值得到的$\tilde{V}_\nu(\theta) = \max_{\nu_0 \le l \le \nu}V_l(\theta)$可以作为$V(\theta)$的一个更紧的下界，并且其能够在$\Theta$上几乎处处收敛于$V(\theta)$。
 第三，如果我们能够计算关于一系列下界$\left\{ V_l(\theta) \right\}_{l=l_0}^\nu$的全局最优解，那么这些最优解（见~\eqref{eq:bestmaximizer}）能够收敛于最小-最大多项式优化问题的全局最优解。为了计算~\eqref{eq:maxlowerbound}的全局最优解，我们再一次使用章节~\ref{sec:sdpverify}中引入的Lasserre's Hierarchy。由于~\eqref{eq:maxlowerbound}只是关于$\theta$的多项式优化问题，其维度较低。因此，通常我们能获得~\eqref{eq:maxlowerbound}的全局最优解。
 第四，与定理~\ref{thm:lasserre}中不同：在定理~\ref{thm:lasserre}中，我们有可能通过平面条件检测与验证全局最优解是否取到；而在定理~\ref{thm:globalconvergence}中，我们无法在数值上检测$V^\star = \hat{V}_\nu^\star$是否取得。这也就意味着，我们的算法无法说明函数族$\left\{ b(x, \theta) \mid \theta \in \Theta \right\}$中，不存在一个合法的鲁棒控制障碍函数。
-第五，假设$\left\{ \theta \mid V_\nu(\theta) \ge 0 \right\}$在某一个$\nu$下非空，那么该多项式下界$V_\nu(\theta)$使我们能够在上述集合中选出一个$\theta$来优化另一些有关$\theta$的指标$\Psi(\theta)$。这可以通过求解“$\min_{\theta \in \Theta} \left\{ \Psi(\theta) \mid V_\nu(\theta) \ge 0 \right\}$来实现。例如，在{\color{red} AAA}中我们将会看到，$\Psi(\theta)$能够表征集合$\mathcal{C}$的大小。
+第五，假设$\left\{ \theta \mid V_\nu(\theta) \ge 0 \right\}$在某一个$\nu$下非空，那么该多项式下界$V_\nu(\theta)$使我们能够在上述集合中选出一个$\theta$来优化另一些有关$\theta$的指标$\Psi(\theta)$。这可以通过求解“$\min_{\theta \in \Theta} \left\{ \Psi(\theta) \mid V_\nu(\theta) \ge 0 \right\}$来实现。例如，在章节~\ref{sec:experiments}中我们将会看到，$\Psi(\theta)$能够表征集合$\mathcal{C}$的大小。
