@@ -2,49 +2,205 @@
 
 \chapter{补充内容}
 
-附录是与论文内容密切相关、但编入正文又影响整篇论文编排的条理和逻辑性的资料，例如某些重要的数据表格、计算程序、统计表等，是论文主体的补充内容，可根据需要设置。
+\section{性质~\ref{prop:boundeddual}的证明}
+\label{app:proof:prop:boundeddual}
 
+\begin{proof}
+  （1）考虑$\mathbb{U}$是一个多面体，且其没有退化的极值点。观察可得，“$\max_{u \in \mathbb{U}} L_gb(x, \theta) u$”是一个关于$u$的线性函数（当$(x, \theta)$固定的时候）。由于$\mathbb{U}$没有退化的极值点，在最优解$u^\star$处，必有$m' \le m$个线性无关的约束被激活。因此，共有$m'$个非零的$\zeta_i^\star$~\cite{bertsimas97book-lp}。不失一般性地，我们假设$i = 1, \dots, m'$为被激活的约束。则KKT的stationary条件~\eqref{eq:kktstationary}可以被表示为：
+  \begin{eqnarray}
+    \underbrace{
+      \left[ \begin{matrix}
+        w_1 & \cdots & w_{m'}
+      \end{matrix} \right]
+    }_{:= W \in \mathbb{R}^{m \times m'}} = L_gb(x, \theta)
+  \end{eqnarray}
+  而这暗含了$(\zeta^\star)^T (W^TW) (\zeta^\star) = \parallel L_gb(x, \theta) \parallel^2$。当$W^TW \succ 0$时（亦即，$\left\{ w_i \right\}_{i=1}^{m'}$线性无关），我们有
+  \begin{eqnarray}
+    \left\lVert \zeta^\star \right\rVert \le \frac{
+      \left\lVert L_gb(x, \theta) \right\rVert^2
+    }{
+      \lambda_{\min} (W^T W)
+    }
+  \end{eqnarray}
+  最后，我们观察到$\left\lVert L_gb(x, \theta) \right\rVert^2$是有界的。这是因为它在紧集$\partial \mathcal{C} \times \Theta$上是光滑的。因此，$\left\lVert \zeta^\star \right\rVert^2$是有界的。
 
-\section{图表示例}
+  （2）考虑$\mathbb{U}$是一个箱型，它的每一个维度的取值范围都是$[-w_i, w_i]$。如此一来，KKT条件中的complementarity条件~\eqref{eq:kktcomp}说明了以下两者中有且仅有一者成立：第一，$\zeta_i^\star = 0$；第二，$\zeta_i^\star \ne 0$，但是$u_i^\star = \pm w_i$。在第二种情形下，使用KKT条件中的stationary条件~\eqref{eq:kktstationary}，我们有
+  \begin{eqnarray}
+    \zeta_i^\star = \frac{
+      [L_gb(x, \theta)]_i
+    }{2u_i^\star} \Rightarrow 
+    (\zeta_i^\star)^2 = \frac{
+      [L_gb(x, \theta)]_i^2
+    }{4 w_i^2}, i = 1, \dots, m
+  \end{eqnarray}
+  其中$[L_gb(x, \theta)]_i$表示了$L_gb(x, \theta)$的第$i$项。由于$[L_gb(x, \theta)]_i$是有界的，$(\zeta_i^\star)^2$也是有界的。
 
-\subsection{图}
+  （3）现考虑$\mathbb{U}$是一个椭球，且其被一个单独的约束$u^T W u \le 1$所定义。则KKT条件的complentarity条件~\eqref{eq:kktcomp}说明了以下两者中有且仅有一者成立：第一，$\zeta^\star=0$；第二，$\zeta^\star \ne 0$，但是$(u^\star)^T W (u^\star) = 1$。在第二种条件的情况下，使用KKT条件中的stationary条件~\eqref{eq:kktstationary}，我们有
+  \begin{eqnarray}
+    (\zeta^\star)^2 = \frac{
+      \left\lVert L_gb(x, \theta) \right\rVert^2
+    }{4 \left\lVert W u^\star \right\rVert^2} 
+    \le \frac{
+      \left\lVert L_gb(x, \theta) \right\rVert^2
+    }{4 \lambda_{\min}(W)} 
+  \end{eqnarray}
+  由于$\left\lVert L_gb(x, \theta) \right\rVert^2$在$\partial \mathcal{C} \times \Theta$上是有界的，$(\zeta^\star)^2$在$\partial \mathcal{C} \times \Theta$上也是有界的。
+\end{proof}
 
-附录中的图片示例（图~\ref{fig:appendix-figure}）。
+\section{对于系统~\eqref{eq:cleanvdpodynamics}和控制障碍函数~\eqref{eq:cleanvdpocbf}，证明~\eqref{eq:standardpop}中的$y$有界}
+\label{app:bound:y:cleanvdp}
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.6\linewidth]{example-image-a.pdf}
-  \caption{附录中的图片示例}
-  \label{fig:appendix-figure}
-\end{figure}
+明显地，$\left\lVert x \right\rVert^2 \le \theta$，$u^2 \le u_{\max}^2$是有界的。然而，我们还需要证明$\zeta^\star$是有界的。KKT条件的complentarity条件~\eqref{eq:kktcomp}说明了以下两者中有且仅有一者成立：第一，$\zeta^\star=0$；第二，$\zeta^\star \ne 0$，但是$c_{u,i}(u) = 0$，这意味着$u^\star = \pm u_{\max}$。在第二种情况下，使用KKT条件中的stationary条件~\eqref{eq:kktstationary}，我们有
+\begin{eqnarray}
+  2\zeta^\star u^\star = L_gb(x, \theta) = -2 x_1 x_2
+\end{eqnarray}
+求解其中的$\zeta^\star$，我们有
+\begin{eqnarray}
+  \zeta = \frac{-x_1 x_2}{u^\star} \Rightarrow 
+  (\zeta^\star)^2 = \frac{x_1^2 x_2^2}{u_{\max}^2} \le \frac{
+    (x_1^2 + x_2^2)^2
+  }{4 u_{\max}^2} = \frac{\theta_2}{4 u_{\max}^2}
+\end{eqnarray}
 
+\section{性质~\ref{prop:wrongvdpocbf}的证明}
+\label{app:proofwrongvdpocbf}
 
-\subsection{表格}
+\begin{proof}
+  我们有
+  \begin{subequations}
+    \begin{eqnarray}
+      L_fb(x, \theta) =& -x_2^2 (1 - x_2^2) \\
+      L_gb(x, \theta) =& -2x_1 x_2 \\
+      L_Jb(x, \theta) =& -2x_2
+    \end{eqnarray}
+  \end{subequations}
+  作为结果，我们有：
+  \begin{subequations}
+    \begin{eqnarray}
+      V_u^\star =& \displaystyle \max_{u^2 \le u_{\max}^2} (-2 x_1 x_2) u 
+      = 2 u_{\max} |x_1 x_2| \\
+      V_\epsilon^\star =& \displaystyle \min_{
+        \left\lVert \epsilon \right\rVert \le M_\epsilon
+      } -2 x_2 \epsilon 
+      = -2 M_\epsilon |x_2|
+    \end{eqnarray}
+  \end{subequations}
+  以及
+  \begin{eqnarray}
+    V(\theta) = \min_{\left\lVert x \right\rVert^2 = \theta} 
+    -x_2^2 (1 - x_2^2) + u_{\max} |x_1 x_2| - M_\epsilon |x_2|
+  \end{eqnarray}
+  我们选择$x_2 = 0, x_1 = \pm \sqrt{\theta}$，可以得到$V(\theta) \le 0$。
+\end{proof}
 
-附录中的表格示例（表~\ref{tab:appendix-table}）。
+\section{对于系统~\eqref{eq:vdpodynamics}和控制障碍函数~\eqref{eq:ellipsoidalcbf}，证明~\eqref{eq:standardpop}中的$y$有界}
+\label{app:bound:y:uncertainvdp}
 
-\begin{table}
-  \centering
-  \caption{附录中的表格示例}
-  \begin{tabular}{ll}
-    \toprule
-    文件名          & 描述                         \\
-    \midrule
-    thuthesis.dtx   & 模板的源文件，包括文档和注释 \\
-    thuthesis.cls   & 模板文件                     \\
-    thuthesis-*.bst & BibTeX 参考文献表样式文件    \\
-    thuthesis-*.bbx & BibLaTeX 参考文献表样式文件  \\
-    thuthesis-*.cbx & BibLaTeX 引用样式文件        \\
-    \bottomrule
-  \end{tabular}
-  \label{tab:appendix-table}
-\end{table}
+显然，$u^2 \le u_{\max}$是有界的。而$x$也是有界的，这是因为
+\begin{eqnarray}
+  \max_{x^T A x = 1} \overset{v := A^{1/2}x}{=} 
+  \max_{v^T v = 1} v^T A^{-1} v = \frac{1}{\lambda_{\min}(A)}
+\end{eqnarray}
+其中$\lambda_{\min}$和$\lambda_{\max}$表示了$A$的特征值中的最大值和最小值。注意到
+\begin{eqnarray}
+  \lambda_{\min} (\lambda_{\max} + \lambda_{\min}) \ge \lambda_{\min} \lambda_{\max} = \theta_1 \theta_2 - \theta_3^2 \Rightarrow \\
+  \lambda_{\min} \ge \frac{
+    \theta_1 \theta_2 - \theta_3^2
+  }{
+    \lambda_{\min} + \lambda_{\max}
+  } = \frac{
+    \theta_1 \theta_2 - \theta_3^2
+  }{
+    \theta_1 + \theta_2
+  }
+\end{eqnarray}
+因此，$x$是有界的，因为
+\begin{eqnarray}
+  \left\lVert x \right\rVert^2 \le \frac{1}{\lambda_{\min}(A)} 
+  \le \frac{
+    \theta_1 + \theta_2
+  }{
+    \theta_1 \theta_2 - \theta_3^2
+  }
+\end{eqnarray}
+现在考虑$z^2 = \left\lVert L_Jb(x, \theta) \right\rVert^2$：
+\begin{eqnarray}
+  \left\lVert L_Jb(x, \theta) \right\rVert^2 = 
+  \left\lVert -2 x^T A J(x) \right\rVert^2 = 
+  4 x^T A J(x)J(x)^T A x
+\end{eqnarray}
+注意到$J(x)J(x)^T \preceq \textbf{I}$，这就意味着
+\begin{eqnarray}
+  \left\lVert L_Jb(x, \theta) \right\rVert^2 \le 
+  4x^T A^2 x \le 4 \lambda_{\max}(A) \le 4(\theta_1 + \theta_2)
+\end{eqnarray}
+现在还需要证明$\zeta^\star$也是有界的。与附录~\ref{app:bound:y:cleanvdp}相似，KKT条件能够告诉我们以下两者中有且仅有一种成立：第一，$\zeta^\star = 0$；第二，
+\begin{eqnarray}
+  \zeta^\star = \frac{L_gb(x, \theta)}{2u^\star}, \quad (u^\star)^2 = u_{\max}^2
+\end{eqnarray}
+我们将$(L_gb(x, \theta))^2$写为
+\begin{eqnarray}
+  (L_gb(x, \theta))^2 = 
+  \left\lVert -2 x^T Ag \right\rVert^2 = 4 x^T Agg^T Ax
+\end{eqnarray}
+其中$gg^T \preceq (x_1^2 + x_2^2) \textbf{I}$，我们可以得到
+\begin{eqnarray}
+  (L_gb(x, \theta))^2 \le 
+  4 \left\lVert x \right\rVert^2 x^T A^2 x \le 
+  4 \frac{
+    (\theta_1 + \theta_2)^2
+  }{
+    \theta_1 \theta_2 - \theta_3^2
+  } \\
+  \Rightarrow (\zeta^\star)^2 = 
+  \frac{
+    (L_gb(x, \theta))^2
+  }{4 u_{\max}^2} \le 
+  \frac{
+    (\theta_1 + \theta_2)^2
+  }{
+    u_{\max}^2 (\theta_1 \theta_2 - \theta_3^2)
+  }
+\end{eqnarray}
 
+\section{计算矩}\label{sec:app:computemoments}
 
-\section{数学公式}
+\subsection{无不确定性的受控Van der Pol振荡器}
+在这种情况下，我们使用的是圆形控制障碍函数。考虑参数空间$\Theta \in [\theta_{\min}, \theta_{\max}]$，令$\Delta_\theta = \theta_{\max} - \theta_{\min}$成为$\Theta$的“长度”。我们计算\eqref{eq:computemoments}的矩
+\begin{eqnarray}
+  \gamma_\beta = \int_{\theta_{\min}}^{\theta_{\max}} \theta^\beta d \psi (\theta) = 
+  \frac{1}{\Delta_\theta} \int_{\theta_{\min}}^{\theta_{\max}} \theta^\beta d\theta = 
+  \frac{
+    \theta_{\max}^{\beta+1} - \theta_{\min}^{\beta+1}
+  }{(\beta + 1) \Delta_\theta}
+\end{eqnarray}
 
-附录中的数学公式示例（公式\eqref{eq:appendix-equation}）。
-\begin{equation}
-  \frac{1}{2 \uppi \symup{i}} \int_\gamma f = \sum_{k=1}^m n(\gamma; a_k) \mathscr{R}(f; a_k)
-  \label{eq:appendix-equation}
-\end{equation}
+\subsection{具备不确定性的受控Van der Pol振荡器}
+这种情况下，我们使用椭圆形控制障碍函数。对于~\eqref{eq:ellipsoidalparam}所定义的$\Theta$，我们计算~\eqref{eq:computemoments}：
+\begin{eqnarray}
+  & \gamma_\beta = \displaystyle \int_{\Theta} \theta_1^{\beta_1} \theta_2^{\beta_2} \theta_3^{\beta_3} d \psi(\theta) \nonumber \\
+  = & \displaystyle \int_{\theta_1} \int_{\theta_2} \int_{\theta_3} \theta_1^{\beta_1} \theta_2^{\beta_2} \theta_3^{\beta_3} \left(  
+    \frac{1}{\text{vol}\Theta} d \theta_1 d \theta_2 d \theta_3
+    \right) \nonumber \\
+  = & \displaystyle \frac{1}{\text{vol}\Theta} \int_{\theta_1} \int_{\theta_2} \theta_1^{\beta_1} \theta_2^{\beta_2} \left(
+    \int_{-\xi \sqrt(\theta_1 \theta_2)}^{\xi \sqrt(\theta_1 \theta_2)} \theta_3^{\beta_3} d \theta_3
+    \right) \nonumber \\
+  = & \displaystyle \frac{
+    \xi^{\beta_3 + 1} (1 - (-1)^{\beta_3 + 1})
+  }{
+    (\beta_3 + 1) \text{vol}(\Theta)
+  } \int_{\theta_1} \int_{\theta_2} 
+  \theta_1^{\beta_1 + \frac{\beta_3}{2}} 
+  \theta_2^{\beta_2 + \frac{\beta_3}{2}} d \theta_1 d \theta_2 \nonumber \\
+  = & \displaystyle \frac{
+    \xi^{\beta_3 + 1} (1 - (-1)^{\beta_3 + 1})
+  }{
+    (\beta_3 + 1) \text{vol}(\Theta)
+  } \frac{
+    \bar{\theta}^{\tilde{\beta}_1} - \underbar{\theta}^{\tilde{\beta}_1}
+  }{\tilde{\beta}_1}
+  \frac{
+    \bar{\theta}^{\tilde{\beta}_2} - \underbar{\theta}^{\tilde{\beta}_2}
+  }{\tilde{\beta}_2}
+\end{eqnarray}
+其中，$\text{\Theta}$是$\Theta$的体积（一个常数，我们不需要关心）。而$\tilde{\beta}_1 = \beta_1 + \frac{\beta_3}{2}$，$\tilde{\beta}_2 = \beta_2 + \frac{\beta_3}{2}$。
