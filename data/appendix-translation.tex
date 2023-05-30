@@ -1,83 +1,342 @@
 % !TeX root = ../thuthesis-example.tex
 
+% \usepackage{amsmath,amsfonts}
+% \usepackage{multicol}
+% \usepackage{graphicx}
+
+%definitions
+\renewcommand{\AA}{{\cal{A}}}
+\newcommand{\II}{{\cal{I}}}
+\newcommand{\CC}{{\cal{C}}}
+\newcommand{\FF}{{\cal{F}}}
+\newcommand{\LL}{{\cal{L}}}
+\newcommand{\R}{\mathbb{R}}
+% \newcommand{\N}{\mathbb{N}}
+\renewcommand{\SS}{{\cal{S}}}
+\newcommand{\TT}{{\cal{T}}}
+\newcommand{\UU}{{\mathbf{U}}}
+\newcommand{\XX}{{\mathbf{X}}}
+\newcommand{\I}{{\boldsymbol{1}}}
+\def\z{\mathbf{z}}
+\def\w{\mathbf{w}}
+\def\y{\mathbf{y}}
+\def\K{\mathbf{K}}
+\newcommand{\comment}[1]{\textcolor{red}{\textbf{#1}}}
+
+% \newtheorem{assumption}{Assumption}
+% \newtheorem{example}{Example}
+% \newtheorem{remark}{Remark}
+
 \begin{translation}
 \label{cha:translation}
 
-\title{书面翻译题目}
+\title{标题：通过占据测度实现非线性最优控制综合}
+\author{Didier Henrion, Jean B. Lasserre and Carlo Savorgnan}
 \maketitle
 
-\tableofcontents
+\begin{abstract}
+  我们考虑所有问题数据都是多项式的非线性最优控制问题 (OCP)。 在本文的第一部分，我们回顾了如何使用线性矩阵不等式 (LMI) 松弛的层次结构，使用占用度量逐点逼近给定 OCP 的最优价值函数。 在第二部分中，我们将方法扩展到在给定集合上逼近最优值函数，并使用这样的函数来建设性和计算性地推导出几乎最优的控制律。数值例子表明了该方法的有效性。
+\end{abstract}
+
+\section{引言}
+
+众所周知，尽管 Pontryagin 最小原理和 Hamilton-Jacobi-Bellman 最优条件等理论工具的强大功能，解决最优控制问题 (OCP) 可能是一项非常艰巨的任务。
+在处理状态和输入约束时，这种说法尤其正确。
 
 
-本科生的外文资料书面翻译。
+\textbf{贡献。} 在本文中，我们考虑所有问题数据都是多项式的 OCP 类。
+我们部署的方法（在 \cite{LasPriHen2005} 中引入）基于矩理论，包括推导 OCP 的凸线性矩阵不等式 (LMI) 松弛的层次结构，它给出最优值下限的递增序列 . 这些 LMI 问题可以使用现成的半定规划 (SDP) 求解器来解决。
 
+关于 \cite{LasPriHen2005} 及其扩展版本 \cite{LasHenPriTre2008} 的贡献是双重的。 首先，从基本概念开始，以更简单的方式获得松弛的推导。 第二个也是更重要的贡献是，我们展示了如何应用该方法来近似集合上的最优值函数，并以建设性和计算方式推导
+一个控制律。 几个简单的例子说明了这种方法。
 
-\section{图表示例}
+\textbf{符号。}
+$\R$ 和 $\mathbb{N}$ 分别表示实数集和整数集。
+$\R[y]=[y_1, \dots , y_n]$ 表示变量 $y$ 中的多项式环。
+$\R[y]_d=[y_1, \dots , y_n]$ 表示变量 $y$ 中次数最多为 $d$ 的多项式环。
+当 $y \in \R^n$ 和 $\alpha\in\mathbb{N}^n$ 时，$y^\alpha$ 代表 $y_1^{\alpha_1} \dots y_n^{\alpha_n}$。
+给定一个多项式函数 $\varphi$，$\deg(\varphi)$ 是其单项式的最大次数。
+给定一个可微函数 $\varphi(y)$, $\nabla_y(\varphi)=[\frac{\partial\varphi}{\partial y_1}, \dots ,\frac{\partial\varphi}{\partial y_n }]$ 是它相对于 $y$ 的梯度。
+$\delta_{y_0}$ 是 $y_0$ 处的狄拉克测度。
+$v'$ 表示 $v$ 的转置。
 
-\subsection{图}
+\section{问题定义}
+考虑由微分方程描述的连续时间系统
+\begin{equation}\label{eq:dynamics}
+\dot x(t) = f(t, x(t), u(t))
+\end{equation}
+其中 $x\in\R^n$ 和 $u\in\R^m$ 分别是状态向量和输入向量。
+通过定义代价函数
+\begin{equation}\label{eq:cost}
+\int_0^T h(t, x(t), u(t)) dt + H(x(T))
+\end{equation}
+初始约束为
+\begin{equation}\nonumber
+x(0) \in \CC_I=\{ x: g_{I_j}(x)\leq 0, ~ j=1,\dots,n_I \} 
+\end{equation}
+末态约束为
+\begin{equation}\nonumber
+x(T) \in \CC_F=\{ x: g_{F_j}(x)\leq 0, ~ j=1,\dots,n_F \}
+\end{equation}
+我们可以制定几个OCP。 例如，当 $\CC_I$ 和 $\CC_F$ 仅包含一个点时，我们遇到了将系统从指定的初始条件 $x(0)=x_0$ 驱动到最终条件 $x(T)=x_T$ 的经典问题 通过最小化给定的成本。
 
-附录中的图片示例（图~\ref{fig:appendix-translation-figure}）。
-
-\begin{figure}
-  \centering
-  \includegraphics[width=0.6\linewidth]{example-image-a.pdf}
-  \caption{附录中的图片示例}
-  \label{fig:appendix-translation-figure}
-\end{figure}
-
-
-\subsection{表格}
-
-附录中的表格示例（表~\ref{tab:appendix-translation-table}）。
-
-\begin{table}
-  \centering
-  \caption{附录中的表格示例}
-  \begin{tabular}{ll}
-    \toprule
-    文件名          & 描述                         \\
-    \midrule
-    thuthesis.dtx   & 模板的源文件，包括文档和注释 \\
-    thuthesis.cls   & 模板文件                     \\
-    thuthesis-*.bst & BibTeX 参考文献表样式文件    \\
-    thuthesis-*.bbx & BibLaTeX 参考文献表样式文件  \\
-    thuthesis-*.cbx & BibLaTeX 引用样式文件        \\
-    \bottomrule
-  \end{tabular}
-  \label{tab:appendix-translation-table}
-\end{table}
-
-
-\section{数学公式}
-
-附录中的数学公式示例（公式\eqref{eq:appendix-translation-equation}）。
-\begin{equation}
-  \frac{1}{2 \uppi \symup{i}} \int_\gamma f = \sum_{k=1}^m n(\gamma; a_k) \mathscr{R}(f; a_k)
-  \label{eq:appendix-translation-equation}
+在续集中，我们将考虑在轨迹 $(t, x(t), u(t)) \in \CC_T$ 上附加约束的所有问题，其中
+\begin{equation}\nonumber
+\CC_T=\{ (t,x,u): g_{T_j}(t,x,u)\leq 0, ~ j=1,\dots,n_T \}.
 \end{equation}
 
+推导该方法所必需的一个重要假设是所有问题数据都是多项式的。 更确切地说：
+\begin{assumption}\label{as:poly}
+  函数 $f$、$h$、$H$、$g_{I_j}$、$g_{T_j}$ 和 $g_{F_j}$ 是多项式的。
+\end{assumption}
 
-\section{文献引用}
+\section{最优控制的矩方法}
+矩方法的关键思想是定义三个 \textit{占用度量}，它们传达有关系统初始条件、轨迹和最终条件的信息。
+然后根据此类措施的时刻对 OCP 进行重新措辞。
+得到的凸问题包含三个成分：
+\begin{itemize}
+\item 一组对表征系统动力学的矩的线性等式约束；
+\item 一组半定约束，这些约束来自矩属于一个度量的事实；
+\item 一组半定约束，它们将 $\CC_I$、$\CC_T$ 和 $\CC_F$ 引起的约束转换到测度的支持上。
+\end{itemize}
+为了得出这个约束，我们假设地平线 $T$ 是固定的。
 
-文献引用示例\cite{abrahams99tex}。
+
+\subsection{轨迹约束}
+为了获得轨迹约束，我们从系统轨迹可以表征研究某些\textit{测试函数}如何沿着轨迹演变的想法开始。 为此，我们选择 $t^\alpha x^\beta$ 形式的单项式函数。 考虑轨迹 $x(t)$。 使用微积分基本定理我们可以写为
+\begin{equation}\label{eq:ftoc}
+T^\alpha x(T)^\beta = 0^\alpha x(0)^\beta + \int_0^T \frac{d(t^\alpha x(t)^\beta)}{dt} dt.
+\end{equation}
+轨迹约束是通过重新表述方程 (\ref{eq:ftoc}) 获得的
+三个适当定义的占据测度。
+
+\textit{最终占据测度} $\mu_F$ 捕获了时间 $T$ 的状态信息
+\begin{equation}\nonumber
+x(T)^\beta = \int x^\beta \delta_{x(T)}(dx) = \int x^\beta d\mu_F.
+\end{equation}
+\textit{初始占据测度} $\mu_I$ 捕捉系统初始状态的信息
+\begin{equation}\nonumber
+x(0)^\beta = \int x^\beta \delta_{x(0)}(dx) = \int x^\beta d\mu_I.
+\end{equation}
+\textit{轨迹占据测度} $\mu_T$ 捕获了关于 $t$, $x(t)$ 和 $u(t)$ 沿轨迹的值的信息
+\[
+\int_0^T \!\! t^\gamma x(t)^\eta u(t)^\nu dt \!
+=\!\int_0^T \!\!\!\!\int t^\gamma x^\eta u^\nu \delta_{x(t),u(t)}(dx,du)dt \!
+=\!\int x^\gamma u^\eta t^\nu d\mu_T.
+\]
+请注意 $\mu_F$ 和 $\mu_I$ 是概率度量，它们的质量等于 $1$。
+
+接下来，如果 $f\in\R[t,x,u]$ 那么 $\frac{d(x^\alpha t^\beta)}{dt}\in\R[t,x,u]$ 因为
+\begin{equation}\nonumber %\label{aux}
+\frac{d(x^\alpha t^\beta)}{dt} \! = \! \frac{\partial(x^\alpha t^\beta)}{\partial t} + \nabla_x (x^\alpha t^\beta)f(x,u) \! = \!\! \sum_{\gamma,\eta,\nu} \! a^{\alpha\beta}_{\gamma\eta\nu} x^\gamma u^\eta t^\nu
+\end{equation}
+对于某些依赖于 $f$ 的系数 $a^{\alpha\beta}_{\gamma\eta\nu}$。
+导数的次数是$\deg(x^\alpha t^\beta)-1+\deg(f)$。
+使用前面的等式，(\ref{eq:ftoc}) 可以改写为
+\begin{equation}\label{eq:meascons}
+%= 0^\alpha \int x^\beta d\mu_I + \int \frac{(t^\alpha x^\beta)}{dt} d\mu_T \\
+T^\alpha \int x^\beta d\mu_F 
+= 0^\alpha \int x^\beta d\mu_I + \sum_{\gamma,\eta,\nu} a^{\alpha\beta}_{\gamma\eta\nu} \int t^\gamma x^\eta u^\nu d\mu_T,
+\end{equation}
+即，时刻之间的{\it 线性}关系
+$\mu_F, \mu_I$ 和 $\mu_T$。
+即，引入符号 
+$z_{\beta}=\int x^\beta d\mu_F$,
+$w_{\beta}=\int x^\beta d\mu_I$,
+$y_{\gamma\eta\nu}=\int t^\gamma x^\eta u^\nu d\mu_T$, 
+我们得到
+\begin{equation}\label{eq:momcons}
+T^\alpha z_{\beta} = 0^\alpha w_{\beta} + \sum_{\gamma,\eta,\nu} a^{\alpha\beta}_{\gamma\eta\nu} y_{\gamma\eta\nu}
+\end{equation}
+对于每个 $\alpha,\beta\in\mathbb{N}\times\mathbb{N}^{n}$。 请注意，从 (\ref{eq:momcons})，
+$\mu_T$ 的质量是 $T$。
+在紧凑的表示法中，考虑次数高达 $r$ 的测试函数和次数最多为 $r$ 的单项式的规范基础：
+\begin{equation}\nonumber
+m_r(x)=[1,x_1,\dots,x_n,x_1^2,x_1x_2,\dots,x_1^r,x_1^{r-1}x_2,\dots,x_n^r]'.
+\end{equation}
+定义向量
+$\z_r=\int m_r(x) d\mu_F$,
+$\w_r=\int m_r(x) d\mu_I$和
+$\y_k=\int m_k(t,x,u) d\mu_T$.
+Then,
+\begin{equation}\label{eq:momcon}
+A_F \z_r = A_I \w_r + A_T \y_k
+\end{equation}
+其中 $k\geq r-1+\deg(f)$ 和矩阵 $A_F$、$A_I$ 和 $A_T$ 的系数可以从等式 (\ref{eq:momcons}) 中获得。
+
+将系数向量 $c_h$ 和 $c_H$ 定义为
+\begin{equation}\nonumber
+h(t,x,u)=c_h'm_k(x,t,u), \qquad H(x)=c_H' m_r(x).
+\end{equation}
+观察到
+\begin{equation}\label{criterion}
+\int_0^T h(t, x(t), u(t)) dt + H(x(T))=c_h' \y_k+  c_H' \z_r,
+\end{equation}
+即，OCP 的标准是 $\z_r$ 和 $\y_k$ 上的线性泛函。
+
+到目前为止，对于给定的轨迹 $x(t)$，我们已经描述了三个相关占据测度的时刻满足的线性约束。 现在，如果轨迹未知，则三个度量未知，我们可以考虑抽象线性规划 (LP) 问题 $J(\mu_I) = \min_{\mu_T,\mu_I,\mu_F}
+\int h d\mu_T + \int H d\mu_F$
+受 (\ref{eq:meascons}) 影响，其目的是找到与最佳轨迹相关的占据测度。 $\mu_F$, $\mu_I$, $\mu_T$ 的特征是通过它们各自的截断矩向量 $\z_r$, $\w_r$, $\y_k$,
+剩下的困难是找到条件，确保这些向量和测量的力矩向量分别支持 $\CC_F$、$\CC_I$、$\CC_T$。 这将在下一节中解释。
+
+该方法的一个很好的特点是我们可以使用初始和最终措施。 例如，如果 $\mu_I=\delta_{x_0}$，我们检索具有固定初始状态 $x_0$ 的 OCP 的最优成本 $J(\delta_{x_0})$。 现在，如果 $\mu_I$ 未知，但已知支持 $\CC_I$，则 $J(\mu_I)=\min_{x_0\in\CC_I}J(\delta_{x_0})$。 最后，如果 $\mu_I$ 已知，但狄拉克未知，则求解上述 LP 问题旨在计算 $\int J(\delta_{x_0})d\mu_I(x_0)$。
+
+\subsection{矩矩阵约束}
+存在线性规划 (LP) 或半定规划 (SDP) 无限向量是 {\it moment} 向量的充分必要条件，即紧基本半代数集上某个有限 Borel 测度的矩向量 ; 参见例如 \cite{Put1993}。 我们选择了后者，因为它已被证明对数值目的更有效 \cite{LasPri2004}。
+
+$r$ 为偶数，令
+\begin{equation}\nonumber
+M(\z_r)=\int m_{r/2}(x) m_{r/2}(x)' d\mu_F
+\end{equation}
+是与 $\mu_F$ 关联的 $r$ 阶 {\it 矩矩阵}。 显然，$M(\z_r)$是半正定的，记为$M(\z_r)\succeq0$。 因此，在 OCP 的凸弛豫中，施加
+\begin{equation}\label{eq:mmc}
+M(\z_r) \succeq 0,
+\end{equation}
+并且对 $\w_r$ 和 $\y_k$ 施加了类似的约束。
+
+\subsection{定位矩阵约束}
+与上一小节类似，可以根据 $\z_r、\w_r$ 和 $\y_k$ 上的线性矩阵不等式表示由 $\CC_I$、$\CC_T$ 和 $\CC_F$ 引起的支持约束。 为了推导出这样的不等式，定义
+\begin{equation}\nonumber
+d_{F_j}=\left\{
+\begin{array}{ll}
+\deg(g_{F_j}(x)) & \mbox{if}~\deg(g_{F_j}(x))~\mbox{is even} \\
+\deg(g_{F_j}(x))+1 & \mbox{if}~\deg(g_{F_j}(x))~\mbox{is odd}
+\end{array} \right.
+\end{equation}
+和定位矩阵
+\begin{equation}\nonumber
+L_{g_{F_j}}(\z_r)=\int g_{F_j}(x) m_{(r-d_{F_j})/2}(x) m_{(r-d_{F_j})/2}(x)' d\mu_F.
+\end{equation}
+矩阵 $g_{F_j}(x) m_{(r-d_{F_j})/2}(x) m_{(r-d_{F_j})/2}(x)'$ 对于每个值都是半正定的 $x$ 使得 $g_{F_j}(x)\geq 0$。 因此，如果 $\mu_F$ 在 $\CC_F$ 上得到支持，则 $L_{{F_j}}(\z_r)\succeq0$ 对于每个 $j$ 因此，在 OCP 的凸松弛中，施加半定约束
+\begin{equation}\label{eq:lmc}
+L_{g_{F_j}}(\z_r) \succeq 0 \qquad j=1,\dots,n_F
+\end{equation}
+以及 $\w_r$ 和 $\y_k$ 的类似半定约束。
+
+有关力矩和局部化矩阵约束的更多详细信息，请参见 \cite{Las2001}。
+
+\subsection{凸松弛}
+为了构造 OCP 的凸松弛，设 $r$ 和 $k$ 为偶数，使得
+\begin{equation}\nonumber
+r\geq\deg(H), \quad k\geq\deg(h), \quad k\geq r+\deg(f).
+\end{equation}
+在本文中，我们将假设初始概率
+测量 $\mu_I$ 通过其矩 $\w_r$ 已知。
+
+凸松弛是以下截断矩问题：
+\begin{equation}\label{eq:momocp2}
+\begin{split}
+\min_{\z_r, \y_k}\quad & c_h' \y_k+  c_H' \z_r \\
+& A_F \z_r = A_I \bar \w_r + A_T \y_k \\
+& M(\z_r)\succeq 0, ~~ L_{g_{F_j}}(\z_r)\succeq 0, ~~ \forall j=1,\dots,n_F \\
+& M(\y_k)\succeq 0, ~~ L_{g_{T_j}}(\y_k)\succeq 0, ~~ \forall j=1,\dots,n_T
+\end{split}
+\end{equation}
+其中符号 $\bar \w_r$ 表示力矩向量是已知的。
+当下问题应注意两个重要事实 (\ref{eq:momocp2}):
+\begin{itemize}
+  \item 对力矩的约束对应于必要条件，因此，
+  通常，人们只能获得 OCP 最优值的下限；
+  \item with $\hat r > r$ and $\hat k > k$，$r$ and $k$ 的原始问题的约束是 $\hat r$ and $\hat{k}$。 因此，增加 $r$ 和 $k$ 的值会产生最优值下限的单调非递减序列。
+  \end{itemize}
+
+\begin{remark}
+  如果初始测量 $\mu_I$ 未知，我们将不得不包括额外的约束 $M(\w_r)\succeq 0$, $L_{g_{I_j}}(\w_r)\succeq 0$, $\forall j=1,\dots,n_I$ 现在 $\w_r$ 是一个未知的力矩向量，第一个条目等于 1。
+\end{remark}
+
+\begin{remark}
+  本文的目标之一是从真正基本的概念出发推导 OCP 的凸松弛。 使用紧集 $\K$ 上有界连续函数的 Banach 空间与 $\K$ 上的有限符号 Borel 测度的 Banach 空间之间的对偶性作为起点，也可以获得相同的优化问题，如 \cite{LasPriHen2005,LasHenPriTre2008}，其中最优值的下限序列显示在问题数据的某些假设下收敛。 感兴趣的读者可以参考这些论文以了解更多详细信息。
+\end{remark}
+
+\section{总结}
+
+本文是 \cite{LasPriHen2005,LasHenPriTre2008} 的后续论文，其中根据占用度量方法推导了多项式最优控制问题 (OCP) 的最优值的下限序列。 在当前的论文中，我们提出了一些技术，可以从 OCP 的凸线性矩阵不等式 (LMI) 松弛的解中建设性地推导出控制律。 因此，我们的贡献可以看作是对 \cite{LasPriHen2005,LasHenPriTre2008} 性能分析结果综合的扩展。
+
+一般来说，我们认为 OCP 的矩公式是基于 Lyapunov 或 Hamilton-Jacobi-Bellman 技术的间接方法的一种有吸引力的替代方法。 力矩公式直接处理系统轨迹。 由此产生的原始 LMI 矩问题承认对偶 LMI 平方和 (SOS) 公式，但是，它有助于显式计算控制律。 在这种情况下，泛函分析（测度论）和代数几何（半代数正多项式的表示）之间的良好相互作用可以为潜在的困难控制综合问题提供建设性的答案。
+
+该方法的当前局限性如下。
+
+首先，当我们正在寻找一个多项式值函数（Hamilton-Jacobi-Bellman 方程的平滑子解）时，它近似于（可能是非平滑的）最优值函数 $\bar{\varphi}(t,x)$，它 可能会发生精度在 $\bar{\varphi}(t,x)$ 不平滑的点处恶化的情况。 沿着最优轨迹移动的邻域中的状态空间划分和/或多项式值函数的迭代计算可以帮助解决这个问题，但代价是增加了计算负担。
+
+其次，我们依赖于当前可用的通用 SDP 求解器的性能。 半定规划是一个相对年轻的研究领域，SDP 求解器的成熟度远不及线性或凸二次规划求解器。 更具体地说，据我们所知，目前没有数值稳定的 SDP 求解器，也没有易于处理的 LMI 问题条件估计。 例如，预计选择表示多项式和矩的基会对问题条件产生重大影响，从而影响求解器的数值行为。
+
+第三，LMI 问题中的变量和约束的数量随着状态和输入变量的数量以及价值函数的多项式逼近度的函数而快速增长。 当前的通用 SDP 求解器可以处理数千个变量和约束，远低于对应于具有 6 个状态和 2 个输入的 OCP 的矩 LMI 问题的维度。 出于这些原因，专门针对矩 LMI 问题的拟 Hankel 或拟 Toeplitz 结构量身定制的专用原始对偶内点方法将受到欢迎。
+
+最后，我们目前正在为 GloptiPoly 3 \cite{HenLasLof2007} 开发一个用户友好的 OCP 模块，这有助于明确地将 OCP 表述为广义矩问题。 用户只需提供OCP的多项式数据，模块自动生成近似最优控制律。 一旦准备就绪并完整记录，该软件将可从 GloptiPoly 3 网页免费下载。
+
+% \tableofcontents
 
 
-\appendix
-
-\section{附录}
-
-附录的内容。
+% 本科生的外文资料书面翻译。
 
 
-% 书面翻译的参考文献
+% \section{图表示例}
+
+% \subsection{图}
+
+% 附录中的图片示例（图~\ref{fig:appendix-translation-figure}）。
+
+% \begin{figure}
+%   \centering
+%   \includegraphics[width=0.6\linewidth]{example-image-a.pdf}
+%   \caption{附录中的图片示例}
+%   \label{fig:appendix-translation-figure}
+% \end{figure}
+
+
+% \subsection{表格}
+
+% 附录中的表格示例（表~\ref{tab:appendix-translation-table}）。
+
+% \begin{table}
+%   \centering
+%   \caption{附录中的表格示例}
+%   \begin{tabular}{ll}
+%     \toprule
+%     文件名          & 描述                         \\
+%     \midrule
+%     thuthesis.dtx   & 模板的源文件，包括文档和注释 \\
+%     thuthesis.cls   & 模板文件                     \\
+%     thuthesis-*.bst & BibTeX 参考文献表样式文件    \\
+%     thuthesis-*.bbx & BibLaTeX 参考文献表样式文件  \\
+%     thuthesis-*.cbx & BibLaTeX 引用样式文件        \\
+%     \bottomrule
+%   \end{tabular}
+%   \label{tab:appendix-translation-table}
+% \end{table}
+
+
+% \section{数学公式}
+
+% 附录中的数学公式示例（公式\eqref{eq:appendix-translation-equation}）。
+% \begin{equation}
+%   \frac{1}{2 \uppi \symup{i}} \int_\gamma f = \sum_{k=1}^m n(\gamma; a_k) \mathscr{R}(f; a_k)
+%   \label{eq:appendix-translation-equation}
+% \end{equation}
+
+
+% \section{文献引用}
+
+% 文献引用示例\cite{abrahams99tex}。
+
+
+% \appendix
+
+% \section{附录}
+
+% 附录的内容。
+
+
+% % 书面翻译的参考文献
 \bibliographystyle{unsrtnat}
 \bibliography{ref/appendix}
 
-% 书面翻译对应的原文索引
-\begin{translation-index}
-  \nocite{salomon1995advanced}
-  \bibliographystyle{unsrtnat}
-  \bibliography{ref/appendix}
-\end{translation-index}
+% % 书面翻译对应的原文索引
+% \begin{translation-index}
+%   \nocite{salomon1995advanced}
+%   \bibliographystyle{unsrtnat}
+%   \bibliography{ref/appendix}
+% \end{translation-index}
+
 
 \end{translation}
