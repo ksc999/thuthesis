@@ -1,0 +1,302 @@
+% !TeX root = ../thuthesis-example.tex
+
+\chapter{多控制障碍函数情形}
+
+本章节旨在将没有不确定性的多个控制障碍函数的验证问题转化为单级多项式优化问题。
+
+\section{多控制障碍函数问题引入}
+\begin{definition}[多控制障碍函数安全集合定义] \label{def:safe-set-multi-cbf}
+给定$M$个函数$\left\{ b_i(x),i=1\cdots M \right\} $，安全集合$\mathcal{C}$被定义为$\mathcal{C} =\left\{ x\mid b_i\left( x \right) \ge 0,\forall i=1\cdots M \right\} $. 
+\end{definition}
+
+根据定义~\ref{def:safe-set-multi-cbf}，我们能够刻画$\mathcal{C}$的边界：
+\begin{equation}    \label{eq:safe-set-boundary-multi-cbf}
+\begin{aligned}
+	\partial \mathcal{C} &=\left\{ x\left| \begin{array}{c}
+	x\in \mathbb{X}\\
+	\min \left\{ b_1\left( x \right) \cdots b_M\left( x \right) \right\} =0\\
+\end{array} \right. \right\}\\
+	&=\left\{ x\left| \begin{array}{c}
+	x\in \mathbb{X}\\
+	\exists t\left( \cdot \right) ,\exists k\in \left[ 1,M \right] , s.t.\begin{cases}
+	b_{t\left( i \right)}\left( x \right) =0,\forall i=1\cdots k\\
+	b_{t\left( i \right)}\left( x \right) >0,\forall i=k+1\cdots M\\
+\end{cases}\\
+\end{array} \right. \right\}\\
+\end{aligned}
+\end{equation}
+其中$t(\cdot)$是一个排列函数，例如$t\left( \left\{ 1,2,3 \right\} \right) =\left\{ 3,1,2 \right\} $注意到对于一个给定的$x \in \partial \mathcal{C}$，
+\begin{equation}    \label{eq:k-multi-cbf}
+k=k\left( x \right) =\#\left\{ i\mid b_i(x)=0 \right\} 
+\end{equation}
+是唯一的。然而，$t(\cdot)$的选择就更加灵活，我们只需：
+\begin{equation}    \label{eq:t-multi-cbf}
+t(\cdot )\in T\left( x \right) =\left\{ t(\cdot )\mid \begin{array}{c}
+	t(j)\in \left\{ i\mid b_i(x)=0 \right\} ,\forall j\in \{1\cdots k\}\\
+	t(j)\in \left\{ i\mid b_i(x)>0 \right\} ,\forall j\in \{k+1\cdots M\}\\
+\end{array} \right\} 
+\end{equation}
+
+\begin{definition}[合法的多控制障碍函数族] \label{def:valid-multi-cbf}
+ $\left\{ b_i(x),i=1\cdots M \right\} $是一个合法的多控制障碍函数族，当且仅当$\forall x\in \partial \mathcal{C} $, $\exists u_0\in \mathbb{U}$，使得$\dot{b}_{t\left( i \right)}\left( x,u_0 \right) \ge 0,\forall i=1\cdots k$。其中$k=k(x)$和$t(\cdot) \in T(x)$从~\eqref{eq:k-multi-cbf}和~\eqref{eq:t-multi-cbf}中得来。同样地，$V_0$在~\eqref{eq:V0-multi-cbf}中，我们希望$V_0 \ge 0$。
+\end{definition}
+
+\begin{equation} \label{eq:V0-multi-cbf}
+V_0=\min _{x\in \partial \mathcal{C}}\max _{u\in \mathbb{U}}\min _{i\in \left\{ 1\cdots k \right\}}\dot{b}_{t\left( i \right)}\left( x,u \right) 
+\end{equation}
+
+这是一个三级的多项式优化问题，很难解决。 在\ref{sec:semi-C-multi-cbf} 节中，我们将$\partial \mathcal{C}$表示为一个半代数集。 在第\ref{sec:single-POP-multi-cbf}节中，我们展示了$u$上的最大值和$i$上的最小值可以以某种方式交换，这将导致一个两级的可解多项式优化问题。
+\begin{equation} \label{eq:V0-prime-multi-cbf}
+V_{0}^{'}=\min_{x\in \partial \mathcal{C}} \min_{i\in \left\{ 1\cdots k \right\}} \max_{u\in \mathbb{U}} \dot{b}_{t\left( i \right)}\left( x,u \right) 
+\end{equation}
+
+\section{$\partial \mathcal{C}$的基本半代数表示}
+\label{sec:semi-C-multi-cbf}
+我们首先使用一个半代数集来表示 $\partial \mathcal{C}$。 将 $\mathcal{A}$ 定义为一组 $\left( x,\overrightarrow{\alpha }=\left\{ \alpha _1\cdots \alpha _M \right\} \right)$，其中 $x$ 和 $\overrightarrow{\alpha}$ 满足以下约束：
+\begin{eqnarray}
+x \in \mathbb{X}\\
+\sum_{i=1}^M{\alpha _ib_i\left( x \right)} = 0 \label{eq:x-alpha-zero-eq-multi-cbf}\\    
+b_i\left( x \right) \ge 0,\forall i=1\cdots M \label{eq:x-alpha-b-ineq-multi-cbf}\\
+\alpha _i \ge 0,\forall i=1\cdots M \label{eq:x-alpha-alpha-ineq-multi-cbf}\\   
+\sum_{i=1}^M{\alpha _i} = 1 \label{eq:x-alpha-alpha-sum-multi-cbf}
+\end{eqnarray}
+
+紧接着，$\partial \mathcal{C}$和$\mathcal{A}$有着以下紧密联系：
+\begin{lemma} \label{lemma:semi-alge-bound-multi-cbf}
+    在~\eqref{eq:hierachical-bound-multi-cbf}中定义集合$\mathcal{B}$，则$\mathcal{A} = \mathcal{B}$。 这里 $k=k(x)$ 和 $t(\cdot) \in T(x)$ in~\eqref{eq:hierachical-bound-multi-cbf} 来自~\eqref{eq:k-multi-cbf} 和 ~\eqref{eq:t-multi-cbf}。
+\end{lemma}
+
+\begin{equation} \label{eq:hierachical-bound-multi-cbf}
+\mathcal{B} =\left\{ \left( x,\overrightarrow{\alpha } \right) \left| x\in \partial \mathcal{C} , \text{ for the given }x:\begin{cases}
+	\alpha _{t\left( i \right)}\ge 0,i=1\cdots k\\
+	\sum_{i=1}^k{\alpha _{t\left( i \right)}}=1\\
+	\alpha _{t\left( i \right)}=0,i=k+1\cdots M\\
+\end{cases} \right. \right\} 
+\end{equation}
+
+\begin{remark}
+    引理~\ref{lemma:semi-alge-bound-multi-cbf} 暗示 $\mathcal{A}$ 实际上有一个层次结构： (1) 它存储所有 $x \in \partial \mathcal{C}$ . (2) 给定 $x \in \partial \mathcal{C}$，$k=k(x)$ 和 $t(\cdot) \in T(x)$ 是明确定义的。 然后 $\overrightarrow{\alpha}$ 可以从 ~\eqref{eq:hierachical-alpha-multi-cbf} 中定义的集合中选择。
+\end{remark}
+
+\begin{proof}
+    
+（1） $\mathcal{A} \subseteq \mathcal{B}$：
+
+对于 $\forall \left( x,\overrightarrow{\alpha } \right) \in \mathcal{A}$，从 ~\eqref{eq:x-alpha-zero-eq-multi-cbf} 到 ~\eqref{eq:x-alpha-alpha-sum-multi-cbf}，我们知道至少存在一个$i \in \left\{ 1 \cdots M \right\}$，使得$b_i(x) = 0$。否则，如果 $b_i(x) > 0, \forall i=1\cdots M$，则从 ~\eqref{eq:x-alpha-zero-eq-multi-cbf}, $\alpha_i = 0, \forall i=1\cdots M$。 然而，在这种情况下，$\Sigma \alpha_i = 0$，这违反了~\eqref{eq:x-alpha-alpha-sum-multi-cbf}。
+
+上面已经暗示了 $\min \left\{ b_1(x) \cdots b_M(x) \right\} = 0$。 因此，从 ~\eqref{eq:safe-set-boundary-multi-cbf} 的第一个方程，$x \in \partial \mathcal{C}$。 然后我们可以在这个 $x$ 上定义 $k=k(x)$ 和 $t(\cdot) \in T(x)$。 由于
+\begin{equation}
+\begin{cases}
+	\alpha _{t\left( i \right)}\ge 0,b_{t\left( i \right)}\left( x \right) =0,i=1\cdots k\\
+	\alpha _{t\left( i \right)}=0,b_{t\left( i \right)}\left( x \right) >0,i=k+1\cdots M\\
+\end{cases}
+\end{equation}
+下述的约束天然成立：
+\begin{equation} \label{eq:hierachical-alpha-multi-cbf}
+\begin{cases}
+	\alpha _{t\left( i \right)}\ge 0,i=1\cdots k\\
+	\sum_{i=1}^k{\alpha _{t\left( i \right)}}=1\\
+	\alpha _{t\left( i \right)}=0,i=k+1\cdots M\\
+\end{cases}
+\end{equation}
+
+（2） $\mathcal{A} \supseteq \mathcal{B}$：
+
+对于 $\forall (x, \overrightarrow{\alpha}) \in \mathcal{B}$，~\eqref{eq:x-alpha-alpha-sum-multi-cbf} 和~\eqref{eq:x-alpha-alpha-ineq-multi-cbf} 自动满足。 此外，在这种情况下，
+\begin{equation}
+\begin{aligned}
+	\sum_{i=1}^M{\alpha _ib_i\left( x \right)}&=\sum_{i=1}^k{\alpha _{t\left( i \right)}b_{t\left( i \right)}\left( x \right)}+\sum_{i=k+1}^M{\alpha _{t\left( i \right)}b_{t\left( i \right)}\left( x \right)}\\
+	&=\sum_{i=1}^k{\alpha _{t\left( i \right)}\cdot 0}+\sum_{i=k+1}^M{0\cdot b_{t\left( i \right)}\left( x \right)}=0\\
+\end{aligned}
+\end{equation}
+因此，~\eqref{eq:x-alpha-zero-eq-multi-cbf} 是满足的。 此外，由于 $\min \left\{ b_1(x) \cdots b_M(x) \right\} = 0$，~\eqref{eq:x-alpha-b-ineq-multi-cbf} 自动满足。 根据 $\mathcal{A}$ 的定义，存在 $\overrightarrow{\alpha}$, s.t. $\left( x,\overrightarrow{\alpha } \right) \in \mathcal{A}$。
+
+\end{proof}
+
+\section{多控制障碍函数验证问题的单级多项式优化问题表述}
+\label{sec:single-POP-multi-cbf}
+现在，我们简历双极多项式优化问题来表征验证问题：
+\begin{equation}    \label{eq:V-multi-cbf}
+V=\min_{\left( x,\overrightarrow{\alpha } \right) \in \mathcal{A}}\max_{u\in \mathbb{U}} \sum_{i=1}^M{\alpha _i\dot{b}_i\left( x,u \right)}
+\end{equation}
+在我们陈述 $V_0$ 和 $V$ 之间的关系之前，让我们先看看下面的引理。
+
+\begin{lemma} \label{lemma:H1-H2-multi-cbf}
+    给定来自 ~\eqref{eq:H1-H2-def-multi-cbf} 的 $H_1$ 和 $H_2$，其中 $u\in \mathbb{R} ^d,A_i\in \mathbb{R} ,B_i\ 在 \mathbb{R} ^{1\times d}$ 和凸集 $\mathbb{U} =\left\{ c_w\left( u \right) \le 0,w=1\cdots h \right\} $。 我们有 $H_1 = H_2$。
+\end{lemma}
+
+\begin{eqnarray} \label{eq:H1-H2-def-multi-cbf}
+	H_1=\max_{u\in \mathbb{U}}\min_{i\in \left\{ 1\cdots l \right\}}\left( A_i+B_iu \right)\\
+	H_2=\min_{\begin{array}{c}
+	\overrightarrow{\alpha }\succeq 0\\
+	\Sigma \alpha _i=1\\
+\end{array}}\max_{u\in \mathbb{U}}\sum_{i=1}^l{\alpha _i\left( A_i+B_iu \right)}
+\end{eqnarray}
+
+\begin{remark}
+    引理~\ref{lemma:H1-H2-multi-cbf} 成立是因为 $H_1$ 中的内部最小值定义了线性函数上的逐点最小值，这导致凹函数。 那么，$H_1$是一个凸优化问题，我们可以使用KKT条件来处理它。 此外，$\overrightarrow{\alpha}^{\star}$ from $arg \min H_2$ 具有明确的含义：它是当 $H_1$ 达到最佳值时逐点最小子梯度的系数，如 以下证明。
+\end{remark}
+
+\begin{proof}
+    
+（1） $H_1 \le H_2$.。
+
+使用最小-最大不等式：
+\begin{equation}
+\min_{\begin{array}{c}
+	\overrightarrow{\alpha }\succeq 0\\
+	\Sigma \alpha _i=1\\
+\end{array}}\max_{u\in \mathbb{U}}\sum_{i=1}^l{\alpha _i\left( A_i+B_iu \right)}\ge \max_{u\in \mathbb{U}}\min_{\begin{array}{c}
+	\overrightarrow{\alpha }\succeq 0\\
+	\Sigma \alpha _i=1\\
+\end{array}}\sum_{i=1}^l{\alpha _i\left( A_i+B_iu \right)}
+\end{equation}
+但对于一个给定的$u \in \mathbb{U}$，我们同样有：
+\begin{equation}
+\min_{\begin{array}{c}
+	\overrightarrow{\alpha }\succeq 0\\
+	\Sigma \alpha _i=1\\
+\end{array}}\sum_{i=1}^l{\alpha _i\left( A_i+B_iu \right)}=\min_{i\in \left\{ 1\cdots l \right\}}\left( A_i+B_iu \right) 
+\end{equation}
+因此，$H_1 \le H_2$。
+
+（2）$H_1 \ge H_2$。
+
+定义$f(u)$如下：
+\begin{equation}
+f\left( u \right) =\max_{i\in \left\{ 1\cdots l \right\}}-\left( A_i+B_iu \right) 
+\end{equation}
+它是一组线性函数的逐点最大值。 因此，$f(u)$ 是一个凸函数。 然后我们将 $H_1$ 重写为单级凸优化问题：
+\begin{equation}
+\begin{aligned}
+	H_1&=\max_{u\in \mathbb{U}}\min_{i\in \left\{ 1\cdots l \right\}}\left( A_i+B_iu \right)\\
+	&=-\min_{u\in \mathbb{U}}\max_{i\in \left\{ 1\cdots l \right\}}-\left( A_i+B_iu \right) =-\min_{u\in \mathbb{U}}f\left( u \right)\\
+\end{aligned}
+\end{equation}
+
+虽然 $f(u)$ 不是连续函数，我们仍然可以从~\href{https://people.orie.cornell.edu/mru8/orie6326/lectures/subgradient.pdf}{子梯度讲义中的46页}：
+\begin{equation} \label{eq:fu-subgrad-multi-cbf}
+\partial f\left( u \right) =\left\{ -\sum_{i=1}^l{\alpha _iB_i}\left| \begin{array}{c}
+	\overrightarrow{\alpha }\succeq 0\\
+	\sum_{i=1}^l{\alpha _i}=1\\
+    \alpha _i=0 \quad if\,\,-\left( A_i+B_iu \right) <f\left( u \right) \\
+\end{array} \right. \right\}
+\end{equation}
+紧接着，我们写出$H_1$的KKT条件:
+\begin{eqnarray}
+	0\in \partial f\left( u^{\star} \right) +\sum_{j=1}^h{\zeta _{j}^{\star}\frac{\partial c_j\left( u^{\star} \right)}{\partial u}} \label{eq:H1-KKT-stationary-multi-cbf} \\
+	c_j\left( u^{\star} \right) \le 0, j=1\cdots h\\
+	\zeta _{j}^{\star}\ge 0, j=1\cdots h\\
+	\zeta _{j}^{\star}c_j\left( u^{\star} \right) =0, j=1\cdots h \label{eq:H1-KKT-complementary-multi-cbf}
+\end{eqnarray}
+将~\eqref{eq:H1-KKT-stationary-multi-cbf}中的$\partial f(u^{\star})$替换为~\eqref{eq:fu-subgrad-multi-cbf}，我们可以得到 一个新的静止条件：
+\begin{equation}
+\exists \overrightarrow{\alpha }^{\star}, s.t. \begin{cases}
+	-\sum_{i=1}^l{\alpha _{i}^{\star}B_i}++\sum_{j=1}^h{\zeta _{j}^{\star}\frac{\partial c_j\left( u^{\star} \right)}{\partial u}}=0\\
+	\overrightarrow{\alpha }^{\star}\succeq 0\\
+	\sum_{i=1}^l{\alpha _{i}^{\star}}=1\\
+	\alpha _{i}^{\star}=0 \quad if\,\,-\left( A_i+B_iu^{\star} \right) <f\left( u^{\star} \right)\\
+\end{cases}
+\end{equation}
+我们归一化$H_2$，使用的工具为$\overrightarrow{\alpha}^{\star}$:
+\begin{equation}
+\begin{aligned}
+	H_2&=\min_{\begin{array}{c}
+	\overrightarrow{\alpha }\succeq 0\\
+	\Sigma \alpha _i=1\\
+\end{array}}\max_{u\in \mathbb{U}}\sum_{i=1}^l{\alpha _i\left( A_i+B_iu \right)}\\
+	&\le \max_{u\in \mathbb{U}}\sum_{i=1}^l{\alpha _{i}^{\star}\left( A_i+B_iu \right)}\\
+	&=-\min_{u\in \mathbb{U}}-\left( \sum_{i=1}^l{\alpha _{i}^{\star}A_i} \right) -\left( \sum_{i=1}^l{\alpha _{i}^{\star}B_i} \right) u\\
+\end{aligned}
+\end{equation}
+幸运的是，当我们写 $H_1$ 的 KKT 条件时，它与 $H_2$ 的 KKT 条件完全相同，即 $\left( \overrightarrow{\alpha }^{\star},u^{\star },\zeta ^{\star} \right) $定义在~\eqref{eq:H1-KKT-stationary-multi-cbf} -~\eqref{eq:H1-KKT-complementary-multi-cbf}也可以 导致 $H_2$ 中的原始最优性和对偶最优性（考虑 Slater 条件成立）。
+\begin{equation}
+\begin{aligned}
+	&-\min_{u\in \mathbb{U}} -\left( \sum_{i=1}^l{\alpha _{i}^{\star}A_i} \right) -\left( \sum_{i=1}^l{\alpha _{i}^{\star}B_i} \right) u\\
+    &=-\left( \sum_{i=1}^l{\alpha _{i}^{\star}A_i} \right) -\left( \sum_{i=1}^l{\alpha _{i}^{\star}B_i} \right) u^{\star}\\
+	&=-\sum_{i=1}^l{\alpha _{i}^{\star}\left( A_i+B_iu^{\star} \right)}\\
+\end{aligned}
+\end{equation}
+由于
+\begin{equation}
+\begin{cases}
+	\alpha _{i}^{\star}=0,-\left( A_i+B_iu^{\star} \right) <f\left( u^{\star} \right)\\
+	\alpha _{i}^{\star}\ge 0,-\left( A_i+B_iu^{\star} \right) =f\left( u^{\star} \right)\\
+	\sum_{i=1}^l{\alpha _{i}^{\star}}=1\\
+\end{cases}
+\end{equation}
+我们有
+\begin{equation}
+H_2\le -\sum_{i=1}^l{\alpha _{i}^{\star}\left( A_i+B_iu^{\star} \right)}=f\left( u^{\star} \right) =H_1
+\end{equation}
+\end{proof}
+
+下面陈述本章的主要理论：
+\begin{theorem} \label{thm:V0-V-multi-cbf}
+    给定 ~\eqref{eq:V0-multi-cbf} 中的 $V_0$ 和 ~\eqref{eq:V-multi-cbf} 中的 $V$，我们有 $V=V_0$。
+\end{theorem}
+
+\begin{proof}
+首先，我们注意到给定 $x$，$\dot{b}_i(x, u)$ 在 $u$ 中是线性的：
+\begin{equation}
+\dot{b}_i\left( x,u \right) =L_fb_i\left( x \right) +L_gb_i\left( x \right) \cdot u
+\end{equation}
+因此，通过调用引理~\ref{lemma:H1-H2-multi-cbf}，给定 $x \in \partial \mathcal{C}$，我们有：
+\begin{equation} \label{eq:main-thm-1-multi-cbf}
+\max _{u\in \mathbb{U}}\min _{i\in \left\{ 1\cdots k \right\}}\dot{b}_{t\left( i \right)}\left( x,u \right) =\min _{\begin{array}{c}
+	\alpha _{t\left( i \right)}\ge 0,i=1\cdots k\\
+	\sum_{i=1}^k{\alpha _{t\left( i \right)}}=1\\
+\end{array}}\max _{u\in \mathbb{U}}\sum_{i=1}^k{\alpha _{t\left( i \right)}}\dot{b}_{t\left( i \right)}\left( x,u \right)
+\end{equation}
+其中 $k=k(x)$ 和 $t(\cdot) \in T(x)$ 来自~\eqref{eq:k-multi-cbf} 和~\eqref{eq:t-multi-cbf} . 接下来，为了在 ~\eqref{eq:hierachical-alpha-multi-cbf} 中获得约束，我们手动添加
+\begin{equation}
+\alpha _{t\left( i \right)}=0,i=k+1\cdots M
+\end{equation}
+这将导致
+\begin{equation}
+\begin{aligned}
+	\sum_{i=1}^k{\alpha _{t\left( i \right)}}\dot{b}_{t\left( i \right)}\left( x,u \right) &=\sum_{i=1}^k{\alpha _{t\left( i \right)}}\dot{b}_{t\left( i \right)}\left( x,u \right) +\sum_{i=k+1}^M{\alpha _{t\left( i \right)}}\dot{b}_{t\left( i \right)}\left( x,u \right)\\
+	&=\sum_{i=1}^M{\alpha _{t\left( i \right)}}\dot{b}_{t\left( i \right)}\left( x,u \right) =\sum_{i=1}^M{\alpha _i}\dot{b}_i\left( x,u \right)\\
+\end{aligned}
+\end{equation}
+和
+\begin{eqnarray} \label{eq:main-thm-2-multi-cbf}
+& \min_{\begin{array}{c}
+	 \alpha_{t\left( i \right)}\ge 0,i=1\cdots k\\
+	\sum_{i=1}^k{\alpha_{t\left( i \right)}}=1\\
+\end{array}}\max _{u\in \mathbb{U}}\sum_{i=1}^k{\alpha _{t\left( i \right)}}\dot{b}_{t\left( i \right)}\left( x,u \right) \\
+= & \min _{\begin{array}{c}
+	\alpha _{t\left( i \right)}\ge 0,i=1\cdots k\\
+	\sum_{i=1}^k{\alpha _{t\left( i \right)}}=1\\
+	\alpha _{t\left( i \right)}=0,i=k+1\cdots M\\
+\end{array}}\max _{u\in \mathbb{U}}\sum_{i=1}^M{\alpha _i}\dot{b}_i\left( x,u \right) 
+\end{eqnarray}
+结合 ~\eqref{eq:main-thm-1-multi-cbf} 和 ~\eqref{eq:main-thm-2-multi-cbf}，我们有：
+\begin{equation}
+\begin{aligned}
+	V_0&=\min _{x\in \partial \mathcal{C}}\max _{u\in \mathbb{U}}\min _{i\in \left\{ 1\cdots k \right\}}\dot{b}_{t\left( i \right)}\left( x,u \right)\\
+	&=\min _{x\in \partial \mathcal{C}}\min _{\begin{array}{c}
+	\alpha _{t\left( i \right)}\ge 0,i=1\cdots k\\
+	\sum_{i=1}^k{\alpha _{t\left( i \right)}}=1\\
+	\alpha _{t\left( i \right)}=0,i=k+1\cdots M\\
+\end{array}}\max _{u\in \mathbb{U}}\sum_{i=1}^M{\alpha _i}\dot{b}_i\left( x,u \right)\\
+\end{aligned}
+\end{equation}
+通过$\mathcal{B}$在~\eqref{eq:hierachical-bound-multi-cbf}中的定义，
+\begin{equation}
+V_0=\min _{\left( x,\overrightarrow{\alpha } \right) \in \mathcal{B}}\max _{u\in \mathbb{U}}\sum_{i=1}^M{\alpha _i}\dot{b}_i\left( x,u \right) 
+\end{equation}
+最终，通过引理~\ref{lemma:semi-alge-bound-multi-cbf},
+\begin{equation}
+V_0=\min _{\left( x,\overrightarrow{\alpha } \right) \in \mathcal{A}}\max _{u\in \mathbb{U}}\sum_{i=1}^M{\alpha _i}\dot{b}_i\left( x,u \right) 
+\end{equation}
+\end{proof}
+
+现在我们需要证明的是~\eqref{eq:V-multi-cbf} 中定义的二级 POP 问题可以转换为单级 POP。 由于目标函数
+\begin{equation}
+\sum_{i=1}^M{\alpha _i\dot{b}_i\left( x,u \right)}=\sum_{i=1}^M{\alpha _iL_fb_i\left( x \right)}+\left( \sum_{i=1}^M{\alpha _iL_gb_i\left( x \right)} \right) u
+\end{equation}
+在 $u$ 中仍然是线性的，我们仍然可以使用 KKT 条件来消除内部最大值。
+
+
+

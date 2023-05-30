@@ -23,8 +23,46 @@
     则存在一个常数$M_\zeta$，使得$\parallel \zeta^\star \parallel \le M_\zeta$。
 \end{proposition}
 \begin{proof}
-    见附录~\ref{app:proof:prop:boundeddual}。
-\end{proof}
+    （1）考虑$\mathbb{U}$是一个多面体，且其没有退化的极值点。观察可得，“$\max_{u \in \mathbb{U}} L_gb(x, \theta) u$”是一个关于$u$的线性函数（当$(x, \theta)$固定的时候）。由于$\mathbb{U}$没有退化的极值点，在最优解$u^\star$处，必有$m' \le m$个线性无关的约束被激活。因此，共有$m'$个非零的$\zeta_i^\star$~\cite{bertsimas97book-lp}。不失一般性地，我们假设$i = 1, \dots, m'$为被激活的约束。则KKT的stationary条件~\eqref{eq:kktstationary}可以被表示为：
+    \begin{eqnarray}
+      \underbrace{
+        \left[ \begin{matrix}
+          w_1 & \cdots & w_{m'}
+        \end{matrix} \right]
+      }_{:= W \in \mathbb{R}^{m \times m'}} = L_gb(x, \theta)
+    \end{eqnarray}
+    而这暗含了$(\zeta^\star)^T (W^TW) (\zeta^\star) = \parallel L_gb(x, \theta) \parallel^2$。当$W^TW \succ 0$时（亦即，$\left\{ w_i \right\}_{i=1}^{m'}$线性无关），我们有
+    \begin{eqnarray}
+      \left\lVert \zeta^\star \right\rVert \le \frac{
+        \left\lVert L_gb(x, \theta) \right\rVert^2
+      }{
+        \lambda_{\min} (W^T W)
+      }
+    \end{eqnarray}
+    最后，我们观察到$\left\lVert L_gb(x, \theta) \right\rVert^2$是有界的。这是因为它在紧集$\partial \mathcal{C} \times \Theta$上是光滑的。因此，$\left\lVert \zeta^\star \right\rVert^2$是有界的。
+  
+    （2）考虑$\mathbb{U}$是一个箱型，它的每一个维度的取值范围都是$[-w_i, w_i]$。如此一来，KKT条件中的complementarity条件~\eqref{eq:kktcomp}说明了以下两者中有且仅有一者成立：第一，$\zeta_i^\star = 0$；第二，$\zeta_i^\star \ne 0$，但是$u_i^\star = \pm w_i$。在第二种情形下，使用KKT条件中的stationary条件~\eqref{eq:kktstationary}，我们有
+    \begin{eqnarray}
+      \zeta_i^\star = \frac{
+        [L_gb(x, \theta)]_i
+      }{2u_i^\star} \Rightarrow 
+      (\zeta_i^\star)^2 = \frac{
+        [L_gb(x, \theta)]_i^2
+      }{4 w_i^2}, i = 1, \dots, m
+    \end{eqnarray}
+    其中$[L_gb(x, \theta)]_i$表示了$L_gb(x, \theta)$的第$i$项。由于$[L_gb(x, \theta)]_i$是有界的，$(\zeta_i^\star)^2$也是有界的。
+  
+    （3）现考虑$\mathbb{U}$是一个椭球，且其被一个单独的约束$u^T W u \le 1$所定义。则KKT条件的complentarity条件~\eqref{eq:kktcomp}说明了以下两者中有且仅有一者成立：第一，$\zeta^\star=0$；第二，$\zeta^\star \ne 0$，但是$(u^\star)^T W (u^\star) = 1$。在第二种条件的情况下，使用KKT条件中的stationary条件~\eqref{eq:kktstationary}，我们有
+    \begin{eqnarray}
+      (\zeta^\star)^2 = \frac{
+        \left\lVert L_gb(x, \theta) \right\rVert^2
+      }{4 \left\lVert W u^\star \right\rVert^2} 
+      \le \frac{
+        \left\lVert L_gb(x, \theta) \right\rVert^2
+      }{4 \lambda_{\min}(W)} 
+    \end{eqnarray}
+    由于$\left\lVert L_gb(x, \theta) \right\rVert^2$在$\partial \mathcal{C} \times \Theta$上是有界的，$(\zeta^\star)^2$在$\partial \mathcal{C} \times \Theta$上也是有界的。
+  \end{proof}
 
 章节~\ref{sec:experiments}针对我们的测试问题，计算了上述所有的上界。
 

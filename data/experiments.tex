@@ -31,7 +31,20 @@
     \label{eq:cleanvdpocbf}
     b(x, \theta) = \theta - \parallel x \parallel^2, \quad \theta \in \Theta := [0, \theta_{\max}]
 \end{equation}
-很明显，假设~\ref{assume:archimedeanness}成立。在附录~\ref{app:bound:y:cleanvdp}中，我们计算了多项式优化问题中~\eqref{eq:verifypop}中$y$的界。
+很明显，假设~\ref{assume:archimedeanness}成立。我们在下面的叙述中，将计算多项式优化问题中~\eqref{eq:verifypop}中$y$的界。
+
+明显地，$\left\lVert x \right\rVert^2 \le \theta$，$u^2 \le u_{\max}^2$是有界的。然而，我们还需要证明$\zeta^\star$是有界的。KKT条件的complentarity条件~\eqref{eq:kktcomp}说明了以下两者中有且仅有一者成立：第一，$\zeta^\star=0$；第二，$\zeta^\star \ne 0$，但是$c_{u,i}(u) = 0$，这意味着$u^\star = \pm u_{\max}$。在第二种情况下，使用KKT条件中的stationary条件~\eqref{eq:kktstationary}，我们有
+\begin{eqnarray}
+  2\zeta^\star u^\star = L_gb(x, \theta) = -2 x_1 x_2
+\end{eqnarray}
+求解其中的$\zeta^\star$，我们有
+\begin{eqnarray}
+  \zeta = \frac{-x_1 x_2}{u^\star} \Rightarrow 
+  (\zeta^\star)^2 = \frac{x_1^2 x_2^2}{u_{\max}^2} \le \frac{
+    (x_1^2 + x_2^2)^2
+  }{4 u_{\max}^2} = \frac{\theta_2}{4 u_{\max}^2}
+\end{eqnarray}
+
 
 \subsection{验证问题}
 我们选取了$u_{\max} = 5$，$\theta_{\max} = 2$，并且选取了$\kappa = 4$作为验证多项式优化问题~\eqref{eq:verifypop}中半正定松弛的度。
@@ -79,8 +92,32 @@
     对于系统~\eqref{eq:vdpodynamics}和（候选的）圆形控制障碍函数~\eqref{eq:cleanvdpocbf}，对于任意的$\theta \in \Theta$，有$V(\theta) \le 0$。
 \end{proposition}
 \begin{proof}
-    见附录~\ref{app:proofwrongvdpocbf}。
-\end{proof}
+    我们有
+    \begin{subequations}
+      \begin{eqnarray}
+        L_fb(x, \theta) =& -x_2^2 (1 - x_2^2) \\
+        L_gb(x, \theta) =& -2x_1 x_2 \\
+        L_Jb(x, \theta) =& -2x_2
+      \end{eqnarray}
+    \end{subequations}
+    作为结果，我们有：
+    \begin{subequations}
+      \begin{eqnarray}
+        V_u^\star =& \displaystyle \max_{u^2 \le u_{\max}^2} (-2 x_1 x_2) u 
+        = 2 u_{\max} |x_1 x_2| \\
+        V_\epsilon^\star =& \displaystyle \min_{
+          \left\lVert \epsilon \right\rVert \le M_\epsilon
+        } -2 x_2 \epsilon 
+        = -2 M_\epsilon |x_2|
+      \end{eqnarray}
+    \end{subequations}
+    以及
+    \begin{eqnarray}
+      V(\theta) = \min_{\left\lVert x \right\rVert^2 = \theta} 
+      -x_2^2 (1 - x_2^2) + u_{\max} |x_1 x_2| - M_\epsilon |x_2|
+    \end{eqnarray}
+    我们选择$x_2 = 0, x_1 = \pm \sqrt{\theta}$，可以得到$V(\theta) \le 0$。
+  \end{proof}
 
 那么，我们是否能找到一个鲁棒的控制障碍函数，使得$V(\theta)$的值严格为正呢？答案是肯定的。
 
@@ -99,7 +136,73 @@
         \theta \in \mathbb{R}^3 \mid \theta_1, \theta_2 \in [\underline{\theta}, \overline{\theta}]^2, \theta_3^2 \le \xi^2 \theta_1 \theta_2
      \right\}
 \end{equation}
-其中$0 < \underline{\theta} < \overline{\theta}$且$0 < \xi < 1$。明显地，$A \succ 0$对$(\theta_1, \theta_2, \theta_3) \in \Theta$都成立。且$b(x, \theta)$定义了椭球的边界。更进一步地，假设~\ref{assume:archimedeanness}成立————附录~\ref{app:bound:y:uncertainvdp}证明了这一点：其计算了多项式优化问题~\eqref{eq:verifypop}中$y$的界。s使用这个函数族，我们将获得$V(\theta) > 0$。
+其中$0 < \underline{\theta} < \overline{\theta}$且$0 < \xi < 1$。明显地，$A \succ 0$对$(\theta_1, \theta_2, \theta_3) \in \Theta$都成立。且$b(x, \theta)$定义了椭球的边界。更进一步地，假设~\ref{assume:archimedeanness}成立————下面我们将证明一件事情：其计算了多项式优化问题~\eqref{eq:verifypop}中$y$的界。s使用这个函数族，我们将获得$V(\theta) > 0$。
+显然，$u^2 \le u_{\max}$是有界的。而$x$也是有界的，这是因为
+\begin{eqnarray}
+  \max_{x^T A x = 1} \overset{v := A^{1/2}x}{=} 
+  \max_{v^T v = 1} v^T A^{-1} v = \frac{1}{\lambda_{\min}(A)}
+\end{eqnarray}
+其中$\lambda_{\min}$和$\lambda_{\max}$表示了$A$的特征值中的最大值和最小值。注意到
+\begin{eqnarray}
+  \lambda_{\min} (\lambda_{\max} + \lambda_{\min}) \ge \lambda_{\min} \lambda_{\max} = \theta_1 \theta_2 - \theta_3^2 \Rightarrow \\
+  \lambda_{\min} \ge \frac{
+    \theta_1 \theta_2 - \theta_3^2
+  }{
+    \lambda_{\min} + \lambda_{\max}
+  } = \frac{
+    \theta_1 \theta_2 - \theta_3^2
+  }{
+    \theta_1 + \theta_2
+  }
+\end{eqnarray}
+因此，$x$是有界的，因为
+\begin{eqnarray}
+  \left\lVert x \right\rVert^2 \le \frac{1}{\lambda_{\min}(A)} 
+  \le \frac{
+    \theta_1 + \theta_2
+  }{
+    \theta_1 \theta_2 - \theta_3^2
+  }
+\end{eqnarray}
+现在考虑$z^2 = \left\lVert L_Jb(x, \theta) \right\rVert^2$：
+\begin{eqnarray}
+  \left\lVert L_Jb(x, \theta) \right\rVert^2 = 
+  \left\lVert -2 x^T A J(x) \right\rVert^2 = 
+  4 x^T A J(x)J(x)^T A x
+\end{eqnarray}
+注意到$J(x)J(x)^T \preceq \textbf{I}$，这就意味着
+\begin{eqnarray}
+  \left\lVert L_Jb(x, \theta) \right\rVert^2 \le 
+  4x^T A^2 x \le 4 \lambda_{\max}(A) \le 4(\theta_1 + \theta_2)
+\end{eqnarray}
+现在还需要证明$\zeta^\star$也是有界的。KKT条件能够告诉我们以下两者中有且仅有一种成立：第一，$\zeta^\star = 0$；第二，
+\begin{eqnarray}
+  \zeta^\star = \frac{L_gb(x, \theta)}{2u^\star}, \quad (u^\star)^2 = u_{\max}^2
+\end{eqnarray}
+我们将$(L_gb(x, \theta))^2$写为
+\begin{eqnarray}
+  (L_gb(x, \theta))^2 = 
+  \left\lVert -2 x^T Ag \right\rVert^2 = 4 x^T Agg^T Ax
+\end{eqnarray}
+其中$gg^T \preceq (x_1^2 + x_2^2) \textbf{I}$，我们可以得到
+\begin{eqnarray}
+  (L_gb(x, \theta))^2 \le 
+  4 \left\lVert x \right\rVert^2 x^T A^2 x \le 
+  4 \frac{
+    (\theta_1 + \theta_2)^2
+  }{
+    \theta_1 \theta_2 - \theta_3^2
+  } \\
+  \Rightarrow (\zeta^\star)^2 = 
+  \frac{
+    (L_gb(x, \theta))^2
+  }{4 u_{\max}^2} \le 
+  \frac{
+    (\theta_1 + \theta_2)^2
+  }{
+    u_{\max}^2 (\theta_1 \theta_2 - \theta_3^2)
+  }
+\end{eqnarray}
 
 \subsection{综合问题}
 对于验证问题，此处不像章节~\ref{sec:cleanvanderpol}那么方便。这是因为对于一维的$\theta$，我们可以通过均匀采样来使得我们的样本覆盖整个参数空间$\Theta \in [0, \theta_{\max}]$。然而，若要覆盖参数空间~\eqref{eq:ellipsoidalparam}，我们则需要采样更多的样本。因此，此处我们选择直接综合多项式下界。所选参数如下：$u_{\max} = 5, M_\epsilon = 0.1, \underline{\theta} = 0.25, \overline{\theta} = 0.75, \xi = 0.6$。（1）$\nu = 3$时，如图像~\ref{fig:vanderpol_uncertain}（a）所示，我们稠密地在$\left\{ \theta \mid V_\nu(\theta) \ge 0 \right\}$内采样，色彩图显示了$\Theta$内有大量的点（如图中黄色的点），使得$V_\nu(\theta)$严格大于$0$。特别地$V_\nu(\theta)$的全局最优解在$\theta^\star_\nu = [0.2500;0.2757;0.1323]$处取得，其值为$V^\star_\nu = 0.2376$。（2）图像~\ref{fig:vanderpol_uncertain}（b）展示了$\nu = 4$时的散点图。我们可以看到，能够被验证的椭圆形的鲁棒控制障碍函数的集合变得更大了。$V_\nu(\theta)$的全局最优解在$\theta^\star_\nu = [0.3278;0.2500;0.1718]$处取得，其值为$V^\star_\nu = 1.0606$。
